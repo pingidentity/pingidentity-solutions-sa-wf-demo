@@ -8,7 +8,7 @@ services:
       - ~/.pingidentity/devops
       - ./env_vars
     environment:
-    - SERVER_PROFILE_URL=https://github.com/pingidentity/pingidentity-solution-stacks.git
+    - SERVER_PROFILE_URL=https://github.com/pingidentity/Workforce360.git
     - SERVER_PROFILE_PATH=Workforce360/pingfederate
     ports:
       - 9031:9031
@@ -20,7 +20,7 @@ services:
       - ~/.pingidentity/devops
       - ./env_vars
     environment:
-    - SERVER_PROFILE_URL=https://github.com/pingidentity/pingidentity-solution-stacks.git
+    - SERVER_PROFILE_URL=https://github.com/pingidentity/Workforce360.git
     - SERVER_PROFILE_PATH=Workforce360/pingdirectory
     ports:
       - 1636:636
@@ -43,7 +43,7 @@ services:
   pingdatasync:
     image: pingidentity/pingdatasync:latest
     environment:
-    - SERVER_PROFILE_URL=https://github.com/pingidentity/pingidentity-solution-stacks.git
+    - SERVER_PROFILE_URL=https://github.com/pingidentity/Workforce360.git
     - SERVER_PROFILE_PATH=Workforce360/pingdatasync
     env_file:
       - ~/.pingidentity/devops
@@ -63,7 +63,7 @@ services:
     image: pingidentity/pingcentral:latest
     command: wait-for pingfederate:9031 -t 7200 -- entrypoint.sh start-server
     environment:
-      - SERVER_PROFILE_URL=https://github.com/pingidentity/pingidentity-solution-stacks.git
+      - SERVER_PROFILE_URL=https://github.com/pingidentity/Workforce360.git
       - SERVER_PROFILE_PATH=Workforce360/pingcentral/external-mysql-db
     env_file:
       - ~/.pingidentity/devops
