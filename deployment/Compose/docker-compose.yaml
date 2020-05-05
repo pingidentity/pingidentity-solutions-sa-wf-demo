@@ -9,8 +9,10 @@ services:
     secrets:
       - devops-secret
     environment:
-    - SERVER_PROFILE_URL=https://github.com/pingidentity/Workforce360.git
-    - SERVER_PROFILE_PATH=pingfederate
+      - SERVER_PROFILE_URL=https://github.com/pingidentity/Workforce360.git
+      - SERVER_PROFILE_PATH=pingfederate
+    volumes:
+      - ./pingfederate:/opt/out/instance
     ports:
       - 9031:9031
       - 9999:9999
@@ -22,8 +24,10 @@ services:
     secrets:
       - devops-secret
     environment:
-    - SERVER_PROFILE_URL=https://github.com/pingidentity/Workforce360.git
-    - SERVER_PROFILE_PATH=pingdirectory
+      - SERVER_PROFILE_URL=https://github.com/pingidentity/Workforce360.git
+      - SERVER_PROFILE_PATH=pingdirectory
+    volumes:
+      - ./pingdirectory:/opt/out/instance
     ports:
       - 1636:636
       - 1443:443
