@@ -15,7 +15,7 @@
 # - AuthN Sessions
 # These are mapped later in the /config-store API calls
 
-ls /opt/out/instance/
+ls /opt/out/instance/server/default/conf
 
 sed -e "s#<construct class=\"org.sourceid.oauth20.domain.ClientManagerXmlFileImpl\"/>#<construct class=\"org.sourceid.oauth20.domain.ClientManagerLdapImpl\"/>#" \
     -e "s#<create-instance class=\"org.sourceid.oauth20.token.AccessGrantManagerJdbcImpl\"/>#<create-instance class=\"org.sourceid.oauth20.token.AccessGrantManagerLDAPPingDirectoryImpl\"/>#" \
