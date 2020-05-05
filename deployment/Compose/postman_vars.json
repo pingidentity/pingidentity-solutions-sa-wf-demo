@@ -23,6 +23,16 @@
 			"enabled": true
 		},
 		{
+			"key": "adServiceAccountDN",
+			"value": "{{Your PF Service Account DN}}",
+			"enabled": true
+		},
+		{
+			"key": "adServicePwd",
+			"value": "{{Your PF Service Acct Pwd}}",
+			"enabled": true
+		},
+		{
 			"key": "pingCentralHost",
 			"value": "{{Your PingCentral Host}}",
 			"enabled": true

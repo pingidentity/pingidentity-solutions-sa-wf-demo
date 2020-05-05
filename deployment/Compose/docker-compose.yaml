@@ -5,11 +5,12 @@ services:
     image: pingidentity/pingfederate:latest
     command: wait-for pingdirectory:389 -t 600 -- entrypoint.sh start-server
     env_file:
-      - ~/.pingidentity/devops
       - ./env_vars
+    secrets:
+      - devops-secret
     environment:
     - SERVER_PROFILE_URL=https://github.com/pingidentity/Workforce360.git
-    - SERVER_PROFILE_PATH=Workforce360/pingfederate
+    - SERVER_PROFILE_PATH=pingfederate
     ports:
       - 9031:9031
       - 9999:9999
@@ -17,11 +18,12 @@ services:
   pingdirectory:
     image: pingidentity/pingdirectory:latest
     env_file:
-      - ~/.pingidentity/devops
       - ./env_vars
+    secrets:
+      - devops-secret
     environment:
     - SERVER_PROFILE_URL=https://github.com/pingidentity/Workforce360.git
-    - SERVER_PROFILE_PATH=Workforce360/pingdirectory
+    - SERVER_PROFILE_PATH=pingdirectory
     ports:
       - 1636:636
       - 1443:443
@@ -44,10 +46,11 @@ services:
     image: pingidentity/pingdatasync:latest
     environment:
     - SERVER_PROFILE_URL=https://github.com/pingidentity/Workforce360.git
-    - SERVER_PROFILE_PATH=Workforce360/pingdatasync
+    - SERVER_PROFILE_PATH=pingdatasync
     env_file:
-      - ~/.pingidentity/devops
       - ./env_vars
+    secrets:
+      - devops-secret
     ulimits:
       nproc:
         soft: 16384
@@ -64,10 +67,11 @@ services:
     command: wait-for pingfederate:9031 -t 7200 -- entrypoint.sh start-server
     environment:
       - SERVER_PROFILE_URL=https://github.com/pingidentity/Workforce360.git
-      - SERVER_PROFILE_PATH=Workforce360/pingcentral/external-mysql-db
+      - SERVER_PROFILE_PATH=pingcentral/external-mysql-db
     env_file:
-      - ~/.pingidentity/devops
       - ./env_vars
+    secrets:
+      - devops-secret
     ports:
       - "9022:9022"
     depends_on:
@@ -80,3 +84,7 @@ services:
       MYSQL_ROOT_PASSWORD: 2Federate
     ports:
       - "3306:3306"
+
+secrets:
+  devops-secret:
+    file: ${HOME}/.pingidentity/devops

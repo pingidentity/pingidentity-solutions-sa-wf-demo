@@ -2,12 +2,17 @@
 PING_IDENTITY_ACCEPT_EULA=YES
 
 # PF Logging Level
-PF_LOG_LEVEL=[ INFO | DEBUG ]
+# Can be [ INFO | DEBUG ]
+PF_LOG_LEVEL=INFO
 
 # Password Used to Bind in ldap.properties
+# Should match the `pfAdminPwd` value in `postman_vars.json` (Default: `2FederateM0re`)
 PF_USER_PWD={{PF PD-ServiceAccount Pwd}}
 
-# AD Base DN
+# PD User Base DN
+USER_BASE_DN=dc=workforce360.com
+
+# AD Variables
 AD_DC_HOST={{Your Domain Controller}}
 AD_BASE_DN={{Your AD BaseDN}}
 
