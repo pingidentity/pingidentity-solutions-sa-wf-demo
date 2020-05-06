@@ -4,7 +4,7 @@
 	"values": [
 		{
 			"key": "pfBaseURL",
-			"value": "https://ext-docker.cpricelab.com:9031",
+			"value": "https://ext-docker.ping-demos.com:9031",
 			"enabled": true
 		},
 		{
@@ -23,8 +23,18 @@
 			"enabled": true
 		},
 		{
+			"key": "adServiceAccountDN",
+			"value": "cn=PingFderate,ou=ServiceAccounts,dc=workforce360,dc=com",
+			"enabled": true
+		},
+		{
+			"key": "adServicePwd",
+			"value": "AD-P@ssword99",
+			"enabled": true
+		},
+		{
 			"key": "pingCentralHost",
-			"value": "https://int-docker.cpricelab.com",
+			"value": "https://int-docker.ping-demos.com",
 			"enabled": true
 		}
 	],
