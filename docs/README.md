@@ -11,8 +11,8 @@ The Ping **Workforce360** Solution provides an Enterprise package for PingDirect
   * Download PingID Properties file (Setup --> PingID --> Client Integrations)
 
 ## Contents
-* [Deployment](deployment.md)
-* [Post Deployment](postdeploymemt.md)
+* [Deployment](./deployment.md)
+* [Post Deployment](./postdeployment.md)
 
 ## Deployment
 This repo contains a configuration set for deployment:
