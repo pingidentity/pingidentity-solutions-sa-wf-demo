@@ -8,10 +8,10 @@ https://documenter.getpostman.com/view/1239082/SzS8tkns
 **Collection Defaults**
 | Used By | Variable | Description | Default |
 | --- | --- | --- | --- |
-| PingFederate | `pfAdminURL` | PingFed Administration URL | https://pingfederate:9999 |
+| PingFederate | `pfAdminURL` | PingFed Administration URL | `https://pingfederate:9999` |
 | PingFederate | `pfAdmin` | PingFed API Admin Account | `api-admin` |
 | PingFederate | `pfAdminPwd` | PingFed API Admin Password| {{globalPwd}} |
-| PingDirectory | `pdAdminUrl` | PingDir Administration URL | https://pingdirectory:443 |
+| PingDirectory | `pdAdminUrl` | PingDir Administration URL | `https://pingdirectory:443` |
 | PingDirectory | `pdAdmin` | PingFed Admin Account | `cn=dmanager` |
 | PingDirectory | `pdAdminPwd` | PingDir Admin Password| {{globalPwd}} |
 | PingDataSync | `pdsAdminURL` | PingDataSync Config API URL | `https://pingdatasync:2443` |
