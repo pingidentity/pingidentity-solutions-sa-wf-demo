@@ -1,4 +1,4 @@
-version: "3"
+version: "3.5"
 
 services:
   pingfederate:
@@ -11,8 +11,8 @@ services:
     environment:
       - SERVER_PROFILE_URL=https://github.com/pingidentity/Workforce360.git
       - SERVER_PROFILE_PATH=pingfederate
-    volumes:
-      - ./pingfederate:/opt/out/instance
+        #    volumes:       
+        #- ./pingfederate:/opt/out/instance
     ports:
       - 9031:9031
       - 9999:9999
@@ -26,8 +26,10 @@ services:
     environment:
       - SERVER_PROFILE_URL=https://github.com/pingidentity/Workforce360.git
       - SERVER_PROFILE_PATH=pingdirectory
-    volumes:
-      - ./pingdirectory:/opt/out/instance
+    # Uncomment the `volume:` section below to persist PingFederate data if you restart the container
+    # NOTE: Comment out the `environment:` section above - they do not co-exist
+    #volumes:
+    #  - ./pingdirectory:/opt/out/instance
     ports:
       - 1636:636
       - 1443:443
@@ -49,8 +51,8 @@ services:
   pingdatasync:
     image: pingidentity/pingdatasync:latest
     environment:
-    - SERVER_PROFILE_URL=https://github.com/pingidentity/Workforce360.git
-    - SERVER_PROFILE_PATH=pingdatasync
+      - SERVER_PROFILE_URL=https://github.com/pingidentity/Workforce360.git
+      - SERVER_PROFILE_PATH=pingdatasync
     env_file:
       - ./env_vars
     secrets:
