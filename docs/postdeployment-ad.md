@@ -3,8 +3,6 @@ The Configuration API Collection is configured to allow you to use an existing A
 
 | Variable | Description | Customer Values |
 | -------- | ----------- | ------- |
-| `pfBaseURL` | PingFed Runtime URL | https://{{your PF public FQDN}}:9031 |
-| `pingId` | PingID Properties  | Your PingID Properties file |
 | `adDcHost` | AD Domain Controller | Your AD Domain Controller |
 | `adBaseDN` | AD Base DN | Your AD Base DN |
 | `adDsServiceAccountDN` | PingFed AD Service Account | PF Service Account Full DN |
