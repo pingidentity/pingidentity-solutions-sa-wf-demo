@@ -1,4 +1,4 @@
-![Solution - WorkForce](../Workforce360-Advanced.png)
+![Solution - WorkForce](Workforce360-Advanced.png)
 
 ---
 The Ping [**Workforce360**](https://www.pingidentity.com/en/solutions/workforce-identity/workforce360.html) Solution provides an Enterprise package that includes:
