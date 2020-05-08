@@ -4,6 +4,7 @@
 The Ping [**Workforce360**](https://www.pingidentity.com/en/solutions/workforce-identity/workforce360.html) Solution provides an Enterprise package that includes:
 * Global Authentcation Authority (PingFederate) 
 * Strong Multi-Factor Authentication (PingID) 
+* IDaaS Application Management (PingOne for Enterprise)
 * Unified Data Store (PingDirectory & PingDataSync) 
 * Application Onboarding (PingCentral)
 
