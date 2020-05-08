@@ -1,6 +1,6 @@
 The Ping **Workforce360** Solution provides an Enterprise package for PingDirectory \ PingFederate \ PingID \ PingDataSync \ PingCentral
 
-![Solution - WorkForce](Workforce360-Advanced.png)
+![Solution - WorkForce](../Workforce360-Advanced.png)
 
 ---
 ## Pre-Requisites
@@ -10,8 +10,12 @@ The Ping **Workforce360** Solution provides an Enterprise package for PingDirect
   * Logon to PingOne Admin (https://admin.pingone.com)
   * Download PingID Properties file (Setup --> PingID --> Client Integrations)
 
+## Contents
+* [Deployment](deployment.md)
+* [Post Deployment](postdeploymemt.md)
+
 ## Deployment
-This repo contains 2 configuration sets for deployment:
+This repo contains a configuration set for deployment:
 * [Docker Compose](deployment/Compose)
 * [Kubernetes](deployment/K8s)
 
