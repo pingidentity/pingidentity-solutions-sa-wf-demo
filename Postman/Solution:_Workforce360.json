@@ -2891,7 +2891,6 @@
                       "    var minor = parseInt(version[1]);",
                       "    // Combine into a single number (makes the comparison easier)",
                       "    var currentVersion = Number(major + minor/10);",
-                      "    console.log(currentVersion);",
                       "",
                       "    // Check to see if EXPRESSION_ADMIN is needed (v10.1+)",
                       "    if(currentVersion >= 10.1){",
@@ -8537,91 +8536,91 @@
   ],
   "variable": [
     {
-      "id": "b034eb09-6d9c-467a-8cb2-f3ba5610a6a9",
+      "id": "84d09223-cc39-41ed-b1a4-82d347e4af3b",
       "key": "pfAdminURL",
       "value": "https://pingfederate:9999",
       "type": "string"
     },
     {
-      "id": "49365e88-6c95-4ab7-a892-2cdd5ed9ecfd",
+      "id": "450a3481-a9e8-451d-98e9-2ee0d6206edf",
       "key": "pdAdminUrl",
       "value": "https://pingdirectory:443",
       "type": "string"
     },
     {
-      "id": "d283ba98-0e0a-422b-8bd0-d4cae3ff425b",
+      "id": "e0c97631-d50f-4df7-9597-5dc49414aaa2",
       "key": "pdsAdminURL",
       "value": "https://pingdatasync:443",
       "type": "string"
     },
     {
-      "id": "32cd3993-5ce8-4897-b64c-998fd8b92115",
+      "id": "830e283b-1e93-4db7-b70e-6371f3c8cf14",
       "key": "pfAdmin",
       "value": "api-admin",
       "type": "string"
     },
     {
-      "id": "e303c699-dca7-4151-99de-5038ec271cbc",
+      "id": "4d69073a-13f6-4f1b-9a25-ea8e6a73563a",
       "key": "pfAdminPwd",
       "value": "{{globalPwd}}",
       "type": "string"
     },
     {
-      "id": "cbd20210-e2e7-4b10-977c-3abfaca22d96",
+      "id": "a68177f0-8344-4dbb-9df6-cdda2ecf393d",
       "key": "pdAdmin",
       "value": "cn=administrator",
       "type": "string"
     },
     {
-      "id": "85333a19-8291-4fcf-9546-a3c960c6b080",
+      "id": "ea2510a9-9fc3-417f-88d5-8616019f1c86",
       "key": "pdAdminPwd",
       "value": "{{globalPwd}}",
       "type": "string"
     },
     {
-      "id": "303dd522-a9b9-4bdd-b8ab-ada4b1d05335",
+      "id": "a3892744-2610-49c1-9d18-a668a12e3ac0",
       "key": "pdsAdmin",
       "value": "cn=administrator",
       "type": "string"
     },
     {
-      "id": "bc4f7ec4-e77b-433d-b1f7-c854797b0ce7",
+      "id": "be6042e7-efc1-4a03-8c09-581ba04746fd",
       "key": "pdsAdminPwd",
       "value": "{{globalPwd}}",
       "type": "string"
     },
     {
-      "id": "830cbadc-8fad-4359-93e3-38e172fb6b04",
+      "id": "b628d22f-1d46-4f22-ab30-719572d6c987",
       "key": "globalPwd",
       "value": "2FederateM0re",
       "type": "string"
     },
     {
-      "id": "6fa895c5-f262-4ad4-9bee-7d34b5a1cc5c",
+      "id": "2322227f-318a-4cb8-96f1-e54fa3c218f3",
       "key": "adServiceAccount",
       "value": "pingfederate",
       "type": "string"
     },
     {
-      "id": "7a7a304e-ec9b-4d37-921b-847f75cb7315",
+      "id": "666671fb-a2fc-4b2a-b687-bf398b5f79f1",
       "key": "adServicePwd",
       "value": "P@ssword99",
       "type": "string"
     },
     {
-      "id": "56a5b7a2-5df6-4b45-8aa9-a71b8647643b",
+      "id": "c382e2be-3624-4a2a-867e-c52685db29f3",
       "key": "adUserContainer",
       "value": "cn=Users",
       "type": "string"
     },
     {
-      "id": "3dc46cb5-1287-4eb7-a473-f5c6c4ee8982",
+      "id": "f4ca5c3a-27ec-44ad-a842-3edebf6548c8",
       "key": "adGroupContainer",
       "value": "ou=Groups",
       "type": "string"
     },
     {
-      "id": "6339aa8d-71bc-4a04-914c-063619bd5c54",
+      "id": "af8e9b70-dbf6-42b2-9b20-a9b209ab6934",
       "key": "oauthSecret",
       "value": "{{globalPwd}}",
       "type": "string"
