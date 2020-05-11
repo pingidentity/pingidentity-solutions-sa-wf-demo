@@ -1,8 +1,8 @@
 {
   "info": {
     "_postman_id": "96768c9f-3499-4c34-9ec0-3b67e4dfb0da",
-    "name": "Solution: Workforce360 (v1.1)",
-    "description": "This collection is a bundle of the following Use Cases:\n\n* Use Case: PD-Base\n* Use Case: PF Initial \n* Solution: Workforce - AD \n* Use Case: Add PingCentral\n* Use Case: Add Sample Apps\n* Use Case: Add PingDataSync\n* Use Case: Add PD to Workforce\n\n\nVersion 1.1 - 5/8/2020  \n\n**PingDirectory**\n* Variablized PF Service Account Passwords\n * `pingfederate` / `pfAdminPwd`\n * `pingauditor` / `globalPwd`\n\n**PingFederate**\n* Modified Service Detection code in `Check if PD Server is Up` call to reduce AssertionError count\n* Properly variablized AD connection\n\n* *Use Case: ActiveDirectory*\n* Modified to allow P14E Connection:\n * AD PCV\n * HTML Form Adapter\n * ID-First Adapter\n * Policy Contract\n * AuthN Policies\n\n* *Use Case: PingDirectory*\n* Modified to allow P14E Connection:\n * PD PCV\n * HTML Form Adapter\n * ID-First Adapter\n * Policy Contract\n * AuthN Policies\n\n* *Use Case: Add Sample Apps*\n * Added OAuth client for `client_credential` tokens -- `pingservices` \n\n**PingDataSync**\n* Added `adUserContainer` to DataSync - allows you do configure what Users are synced\n* Added Groups to DataSync (`adGroupContainer`)\n\nVersion 1.0\n* Initial release\n",
+    "name": "Solution: Workforce360 (v1.1.1)",
+    "description": "This collection is a bundle of the following Use Cases:\n\n* Use Case: PD-Base\n* Use Case: PF Initial \n* Solution: Workforce - AD \n* Use Case: PC - Initial\n* Use Case: Add Sample Apps\n* Use Case: Add PingDataSync\n* Use Case: Add PD to Workforce\n\nVersion 1.1.1 - 5/11/2020\n**PingFederate**\n* Added GET `/version` call to determine if API Admin account needs additional roles (v10.1+)\n* Added links to the PF Admin Guide for most PF calls\n\nVersion 1.1 - 5/8/2020  \n\n**PingDirectory**\n* Modified Service Detection code in `Check if PD Server is Up` call to reduce AssertionError count\n* Variablized PF Service Account Passwords\n * `pingfederate` / `pfAdminPwd`\n * `pingauditor` / `globalPwd`\n\n**PingFederate**\n* Properly variablized AD connection\n\n* *Use Case: ActiveDirectory*\n* Modified to allow P14E Connection:\n * AD PCV\n * HTML Form Adapter\n * ID-First Adapter\n * Policy Contract\n * AuthN Policies\n\n* *Use Case: PingDirectory*\n* Modified to allow P14E Connection:\n * PD PCV\n * HTML Form Adapter\n * ID-First Adapter\n * Policy Contract\n * AuthN Policies\n\n* *Use Case: Add Sample Apps*\n * Added OAuth client for `client_credential` tokens -- `pingservices` \n\n**PingDataSync**\n* Added `adUserContainer` to DataSync - allows you do configure what Users are synced\n* Added Groups to DataSync (`adGroupContainer`)\n\nVersion 1.0\n* Initial release\n",
     "schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
   },
   "item": [
@@ -2829,6 +2829,10 @@
                     "exec": [
                       "pm.test(\"API Admin account created\", function () {",
                       "    pm.response.to.be.ok;",
+                      "    ",
+                      "    // `encryptedPassword` needed to Update Account Later",
+                      "    var response = pm.response.json();",
+                      "    pm.environment.set(\"encryptedPassword\", response.encryptedPassword);",
                       "});"
                     ],
                     "type": "text/javascript"
@@ -2859,12 +2863,112 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n    \"username\": \"{{pfAdmin}}\",\n    \"password\": \"2FederateM0re\",\n    \"active\": \"true\",\n    \"description\": \"Used to perform Admin API calls\",\n    \"roles\": [ \"USER_ADMINISTRATOR\", \"CRYPTO_ADMINISTRATOR\", \"ADMINISTRATOR\" ]\n}",
+                  "raw": "{\n    \"username\": \"{{pfAdmin}}\",\n    \"password\": \"{{globalPwd}}\",\n    \"active\": \"true\",\n    \"description\": \"Used to perform Admin API calls\",\n    \"roles\": [ \"USER_ADMINISTRATOR\", \"CRYPTO_ADMINISTRATOR\", \"ADMINISTRATOR\" ]\n}",
                   "options": {
                     "raw": {}
                   }
                 },
-                "url": "{{pfAdminURL}}/pf-admin-api/v1/administrativeAccounts"
+                "url": "{{pfAdminURL}}/pf-admin-api/v1/administrativeAccounts",
+                "description": "https://docs.pingidentity.com/csh?Product=pf-latest&topicname=uwm1564002973007.html"
+              },
+              "response": []
+            },
+            {
+              "name": "Check Version",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "e6ceed9d-02c1-4076-8884-813a097208d1",
+                    "exec": [
+                      "pm.test(\"Version retrieved\", function () {",
+                      "    pm.response.to.be.ok;",
+                      "    var response = pm.response.json();",
+                      "    ",
+                      "    // Split the Version into numbers",
+                      "    var version = response.version.split(\".\");",
+                      "    var major = parseInt(version[0]);",
+                      "    var minor = parseInt(version[1]);",
+                      "    // Combine into a single number (makes the comparison easier)",
+                      "    var currentVersion = Number(major + minor/10);",
+                      "",
+                      "    // Check to see if EXPRESSION_ADMIN is needed (v10.1+)",
+                      "    if(currentVersion >= 10.1){",
+                      "        console.log(\"Creating v10.1+ Admin\");",
+                      "        var pfAdminRoles = \"[ \\\"USER_ADMINISTRATOR\\\", \\\"CRYPTO_ADMINISTRATOR\\\", \\\"ADMINISTRATOR\\\", \\\"EXPRESSION_ADMINISTRATOR\\\" ]\";",
+                      "    }",
+                      "    else{",
+                      "        var pfAdminRoles = \"[ \\\"USER_ADMINISTRATOR\\\", \\\"CRYPTO_ADMINISTRATOR\\\", \\\"ADMINISTRATOR\\\" ]\";",
+                      "        }",
+                      "    pm.environment.set(\"pfAdminRoles\", pfAdminRoles);",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "_postman_id": "6b649360-5dae-44c1-ae66-68f3e966870a",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "X-XSRF-Header",
+                    "value": "pingfederate",
+                    "type": "text"
+                  }
+                ],
+                "url": "{{pfAdminURL}}/pf-admin-api/v1/version",
+                "description": "Used to configure Server Roles that match the license"
+              },
+              "response": []
+            },
+            {
+              "name": "Update API Admin Account with version Roles",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "fa160a1a-873a-4911-95aa-95867a40a4dc",
+                    "exec": [
+                      "pm.test(\"API Admin account created\", function () {",
+                      "    pm.response.to.be.ok;",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "_postman_id": "ea342256-7dd5-4af1-84bb-8b714186bf6a",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "name": "Content-Type",
+                    "type": "text",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "X-XSRF-Header",
+                    "type": "text",
+                    "value": "pingfederate"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"username\": \"{{pfAdmin}}\",\n    \"active\": \"true\",\n    \"description\": \"Used to perform Admin API calls\",\n    \"encryptedPassword\": \"{{encryptedPassword}}\",\n    \"roles\": {{pfAdminRoles}}\n}",
+                  "options": {
+                    "raw": {}
+                  }
+                },
+                "url": "{{pfAdminURL}}/pf-admin-api/v1/administrativeAccounts/{{pfAdmin}}",
+                "description": "PF 10.1+ adds a Role that is needed to use the `/config-store` API. \n\nThis call puts the right roles onto the created Admin account"
               },
               "response": []
             },
@@ -2959,7 +3063,8 @@
                     "raw": {}
                   }
                 },
-                "url": "{{pfAdminURL}}/pf-admin-api/v1/serverSettings"
+                "url": "{{pfAdminURL}}/pf-admin-api/v1/serverSettings",
+                "description": "https://docs.pingidentity.com/csh?Product=pf-latest&topicname=vko1564002972919.html"
               },
               "response": []
             },
@@ -3005,7 +3110,8 @@
                     "raw": {}
                   }
                 },
-                "url": "{{pfAdminURL}}/pf-admin-api/v1/keyPairs/signing/generate"
+                "url": "{{pfAdminURL}}/pf-admin-api/v1/keyPairs/signing/generate",
+                "description": "https://docs.pingidentity.com/csh?Product=pf-latest&topicname=uci1564002984974.html"
               },
               "response": []
             },
@@ -3053,7 +3159,8 @@
                     }
                   }
                 },
-                "url": "{{pfAdminURL}}/pf-admin-api/v1/extendedProperties"
+                "url": "{{pfAdminURL}}/pf-admin-api/v1/extendedProperties",
+                "description": "https://docs.pingidentity.com/csh?Product=pf-latest&topicname=uut1564002974579.html"
               },
               "response": []
             },
@@ -3102,7 +3209,7 @@
                   }
                 },
                 "url": "{{pfAdminURL}}/pf-admin-api/v1/virtualHostNames",
-                "description": "This is used to accept backchannel calls from other services in the stack"
+                "description": "https://docs.pingidentity.com/csh?Product=pf-latest&topicname=muj1564002974462.html\n\nThis is used to accept backchannel calls from other services in the stack"
               },
               "response": []
             }
@@ -3191,7 +3298,8 @@
                         "raw": {}
                       }
                     },
-                    "url": "{{pfAdminURL}}/pf-admin-api/v1/dataStores"
+                    "url": "{{pfAdminURL}}/pf-admin-api/v1/dataStores",
+                    "description": "https://docs.pingidentity.com/csh?Product=pf-latest&topicname=obh1564002976555.html"
                   },
                   "response": []
                 }
@@ -3223,367 +3331,375 @@
               "_postman_isSubFolder": true
             },
             {
-              "name": "Set PD for OAuth Clients",
+              "name": "Config-Store API",
               "item": [
                 {
                   "name": "Set PD for OAuth Clients",
-                  "event": [
+                  "item": [
                     {
-                      "listen": "test",
-                      "script": {
-                        "id": "bdd58167-fbbf-4eac-b0db-adb10cdda528",
-                        "exec": [
-                          "pm.test(\"OAuth Clients in PD\", function () {",
-                          "    pm.response.to.be.ok;",
-                          "});"
+                      "name": "Set PD for OAuth Clients",
+                      "event": [
+                        {
+                          "listen": "test",
+                          "script": {
+                            "id": "bdd58167-fbbf-4eac-b0db-adb10cdda528",
+                            "exec": [
+                              "pm.test(\"OAuth Clients in PD\", function () {",
+                              "    pm.response.to.be.ok;",
+                              "});"
+                            ],
+                            "type": "text/javascript"
+                          }
+                        }
+                      ],
+                      "_postman_id": "928cc2cd-aaa0-467c-be78-fce01870b640",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "method": "PUT",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "name": "Content-Type",
+                            "value": "application/json",
+                            "type": "text"
+                          },
+                          {
+                            "key": "X-XSRF-Header",
+                            "value": "pingfederate",
+                            "type": "text"
+                          }
                         ],
-                        "type": "text/javascript"
-                      }
+                        "body": {
+                          "mode": "raw",
+                          "raw": "    {\n      \"id\": \"PingFederateDSJNDIName\",\n      \"type\": \"STRING\",\n      \"stringValue\": \"LDAP-PingDirectory\"\n    }",
+                          "options": {
+                            "raw": {
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": "{{pfAdminURL}}/pf-admin-api/v1/configStore/org.sourceid.oauth20.domain.ClientManagerLdapImpl/PingFederateDSJNDIName"
+                      },
+                      "response": []
+                    },
+                    {
+                      "name": "Set SearchBase for  OAuth Clients",
+                      "event": [
+                        {
+                          "listen": "test",
+                          "script": {
+                            "id": "bdd58167-fbbf-4eac-b0db-adb10cdda528",
+                            "exec": [
+                              "pm.test(\"OAuth Clients in PD\", function () {",
+                              "    pm.response.to.be.ok;",
+                              "});"
+                            ],
+                            "type": "text/javascript"
+                          }
+                        }
+                      ],
+                      "_postman_id": "35ec67cc-4802-443f-8882-ad65a7e62fbc",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "method": "PUT",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "name": "Content-Type",
+                            "type": "text",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "X-XSRF-Header",
+                            "type": "text",
+                            "value": "pingfederate"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n    \"id\": \"SearchBase\",\n    \"type\": \"STRING\",\n    \"stringValue\": \"ou=oauthClients,{{userBaseDN}}\"\n}",
+                          "options": {
+                            "raw": {
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": "{{pfAdminURL}}/pf-admin-api/v1/configStore/org.sourceid.oauth20.domain.ClientManagerLdapImpl/SearchBase"
+                      },
+                      "response": []
                     }
                   ],
-                  "_postman_id": "928cc2cd-aaa0-467c-be78-fce01870b640",
-                  "protocolProfileBehavior": {
-                    "disableBodyPruning": true
-                  },
-                  "request": {
-                    "method": "PUT",
-                    "header": [
-                      {
-                        "key": "Content-Type",
-                        "name": "Content-Type",
-                        "value": "application/json",
-                        "type": "text"
-                      },
-                      {
-                        "key": "X-XSRF-Header",
-                        "value": "pingfederate",
-                        "type": "text"
-                      }
-                    ],
-                    "body": {
-                      "mode": "raw",
-                      "raw": "    {\n      \"id\": \"PingFederateDSJNDIName\",\n      \"type\": \"STRING\",\n      \"stringValue\": \"LDAP-PingDirectory\"\n    }",
-                      "options": {
-                        "raw": {
-                          "language": "json"
-                        }
-                      }
-                    },
-                    "url": "{{pfAdminURL}}/pf-admin-api/v1/configStore/org.sourceid.oauth20.domain.ClientManagerLdapImpl/PingFederateDSJNDIName"
-                  },
-                  "response": []
+                  "_postman_id": "754893c9-372c-4e45-bc1e-8b1fa8a3002a",
+                  "_postman_isSubFolder": true
                 },
-                {
-                  "name": "Set SearchBase for  OAuth Clients",
-                  "event": [
-                    {
-                      "listen": "test",
-                      "script": {
-                        "id": "bdd58167-fbbf-4eac-b0db-adb10cdda528",
-                        "exec": [
-                          "pm.test(\"OAuth Clients in PD\", function () {",
-                          "    pm.response.to.be.ok;",
-                          "});"
-                        ],
-                        "type": "text/javascript"
-                      }
-                    }
-                  ],
-                  "_postman_id": "35ec67cc-4802-443f-8882-ad65a7e62fbc",
-                  "protocolProfileBehavior": {
-                    "disableBodyPruning": true
-                  },
-                  "request": {
-                    "method": "PUT",
-                    "header": [
-                      {
-                        "key": "Content-Type",
-                        "name": "Content-Type",
-                        "type": "text",
-                        "value": "application/json"
-                      },
-                      {
-                        "key": "X-XSRF-Header",
-                        "type": "text",
-                        "value": "pingfederate"
-                      }
-                    ],
-                    "body": {
-                      "mode": "raw",
-                      "raw": "{\n    \"id\": \"SearchBase\",\n    \"type\": \"STRING\",\n    \"stringValue\": \"ou=oauthClients,{{userBaseDN}}\"\n}",
-                      "options": {
-                        "raw": {
-                          "language": "json"
-                        }
-                      }
-                    },
-                    "url": "{{pfAdminURL}}/pf-admin-api/v1/configStore/org.sourceid.oauth20.domain.ClientManagerLdapImpl/SearchBase"
-                  },
-                  "response": []
-                }
-              ],
-              "_postman_id": "754893c9-372c-4e45-bc1e-8b1fa8a3002a",
-              "_postman_isSubFolder": true
-            },
-            {
-              "name": "Set PD for OAuth Grants",
-              "item": [
                 {
                   "name": "Set PD for OAuth Grants",
-                  "event": [
+                  "item": [
                     {
-                      "listen": "test",
-                      "script": {
-                        "id": "526c5a02-2dda-4537-bd6c-9072bb363e1e",
-                        "exec": [
-                          "pm.test(\"OAuth Grants in PD\", function () {",
-                          "    pm.response.to.be.ok;",
-                          "});"
+                      "name": "Set PD for OAuth Grants",
+                      "event": [
+                        {
+                          "listen": "test",
+                          "script": {
+                            "id": "526c5a02-2dda-4537-bd6c-9072bb363e1e",
+                            "exec": [
+                              "pm.test(\"OAuth Grants in PD\", function () {",
+                              "    pm.response.to.be.ok;",
+                              "});"
+                            ],
+                            "type": "text/javascript"
+                          }
+                        }
+                      ],
+                      "_postman_id": "c95ed362-610b-47fd-8277-ebf67b22d8e3",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "method": "PUT",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "name": "Content-Type",
+                            "type": "text",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "X-XSRF-Header",
+                            "type": "text",
+                            "value": "pingfederate"
+                          }
                         ],
-                        "type": "text/javascript"
-                      }
+                        "body": {
+                          "mode": "raw",
+                          "raw": "    {\n      \"id\": \"PingFederateDSJNDIName\",\n      \"type\": \"STRING\",\n      \"stringValue\": \"LDAP-PingDirectory\"\n    }",
+                          "options": {
+                            "raw": {
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": "{{pfAdminURL}}/pf-admin-api/v1/configStore/org.sourceid.oauth20.token.AccessGrantManagerLDAPPingDirectoryImpl/PingFederateDSJNDIName"
+                      },
+                      "response": []
+                    },
+                    {
+                      "name": "Set SearchBase for OAuth Grants",
+                      "event": [
+                        {
+                          "listen": "test",
+                          "script": {
+                            "id": "526c5a02-2dda-4537-bd6c-9072bb363e1e",
+                            "exec": [
+                              "pm.test(\"OAuth Grants in PD\", function () {",
+                              "    pm.response.to.be.ok;",
+                              "});"
+                            ],
+                            "type": "text/javascript"
+                          }
+                        }
+                      ],
+                      "_postman_id": "237bdeab-1a81-4a90-897a-ec03a12891e8",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "method": "PUT",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "name": "Content-Type",
+                            "type": "text",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "X-XSRF-Header",
+                            "type": "text",
+                            "value": "pingfederate"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n    \"id\": \"SearchBase\",\n    \"type\": \"STRING\",\n    \"stringValue\": \"ou=grants,{{userBaseDN}}\"\n}",
+                          "options": {
+                            "raw": {
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": "{{pfAdminURL}}/pf-admin-api/v1/configStore/org.sourceid.oauth20.token.AccessGrantManagerLDAPPingDirectoryImpl/SearchBase"
+                      },
+                      "response": []
                     }
                   ],
-                  "_postman_id": "c95ed362-610b-47fd-8277-ebf67b22d8e3",
-                  "protocolProfileBehavior": {
-                    "disableBodyPruning": true
-                  },
-                  "request": {
-                    "method": "PUT",
-                    "header": [
-                      {
-                        "key": "Content-Type",
-                        "name": "Content-Type",
-                        "type": "text",
-                        "value": "application/json"
-                      },
-                      {
-                        "key": "X-XSRF-Header",
-                        "type": "text",
-                        "value": "pingfederate"
-                      }
-                    ],
-                    "body": {
-                      "mode": "raw",
-                      "raw": "    {\n      \"id\": \"PingFederateDSJNDIName\",\n      \"type\": \"STRING\",\n      \"stringValue\": \"LDAP-PingDirectory\"\n    }",
-                      "options": {
-                        "raw": {
-                          "language": "json"
-                        }
-                      }
-                    },
-                    "url": "{{pfAdminURL}}/pf-admin-api/v1/configStore/org.sourceid.oauth20.token.AccessGrantManagerLDAPPingDirectoryImpl/PingFederateDSJNDIName"
-                  },
-                  "response": []
+                  "_postman_id": "fb9c6e13-51de-424c-a659-c12dedc6ea9a",
+                  "_postman_isSubFolder": true
                 },
                 {
-                  "name": "Set SearchBase for OAuth Grants",
-                  "event": [
+                  "name": "Set PD for PF AuthN Sessions",
+                  "item": [
                     {
-                      "listen": "test",
-                      "script": {
-                        "id": "526c5a02-2dda-4537-bd6c-9072bb363e1e",
-                        "exec": [
-                          "pm.test(\"OAuth Grants in PD\", function () {",
-                          "    pm.response.to.be.ok;",
-                          "});"
+                      "name": "Set PD for Sessions",
+                      "event": [
+                        {
+                          "listen": "test",
+                          "script": {
+                            "id": "526c5a02-2dda-4537-bd6c-9072bb363e1e",
+                            "exec": [
+                              "pm.test(\"PF Sessions in PD\", function () {",
+                              "    pm.response.to.be.ok;",
+                              "});"
+                            ],
+                            "type": "text/javascript"
+                          }
+                        }
+                      ],
+                      "_postman_id": "d5987e11-c134-423b-9c77-aa9cfd718e81",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "method": "PUT",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "name": "Content-Type",
+                            "type": "text",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "X-XSRF-Header",
+                            "type": "text",
+                            "value": "pingfederate"
+                          }
                         ],
-                        "type": "text/javascript"
-                      }
+                        "body": {
+                          "mode": "raw",
+                          "raw": "    {\n      \"id\": \"PingFederateDSJNDIName\",\n      \"type\": \"STRING\",\n      \"stringValue\": \"LDAP-PingDirectory\"\n    }",
+                          "options": {
+                            "raw": {
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": "{{pfAdminURL}}/pf-admin-api/v1/configStore/org.sourceid.saml20.service.session.data.impl.SessionStorageManagerLdapImpl/PingFederateDSJNDIName"
+                      },
+                      "response": []
+                    },
+                    {
+                      "name": "Set SearchBase for Sessions",
+                      "event": [
+                        {
+                          "listen": "test",
+                          "script": {
+                            "id": "526c5a02-2dda-4537-bd6c-9072bb363e1e",
+                            "exec": [
+                              "pm.test(\"PF Sessions in PD\", function () {",
+                              "    pm.response.to.be.ok;",
+                              "});"
+                            ],
+                            "type": "text/javascript"
+                          }
+                        }
+                      ],
+                      "_postman_id": "da02d6b0-c912-4ffd-9835-d9e345673e1a",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "method": "PUT",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "name": "Content-Type",
+                            "type": "text",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "X-XSRF-Header",
+                            "type": "text",
+                            "value": "pingfederate"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "    {\n      \"id\": \"SearchBase\",\n      \"type\": \"STRING\",\n      \"stringValue\": \"ou=sessions,{{userBaseDN}}\"\n    }",
+                          "options": {
+                            "raw": {
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": "{{pfAdminURL}}/pf-admin-api/v1/configStore/org.sourceid.saml20.service.session.data.impl.SessionStorageManagerLdapImpl/SearchBase"
+                      },
+                      "response": []
                     }
                   ],
-                  "_postman_id": "237bdeab-1a81-4a90-897a-ec03a12891e8",
-                  "protocolProfileBehavior": {
-                    "disableBodyPruning": true
-                  },
-                  "request": {
-                    "method": "PUT",
-                    "header": [
-                      {
-                        "key": "Content-Type",
-                        "name": "Content-Type",
-                        "type": "text",
-                        "value": "application/json"
-                      },
-                      {
-                        "key": "X-XSRF-Header",
-                        "type": "text",
-                        "value": "pingfederate"
-                      }
-                    ],
-                    "body": {
-                      "mode": "raw",
-                      "raw": "{\n    \"id\": \"SearchBase\",\n    \"type\": \"STRING\",\n    \"stringValue\": \"ou=grants,{{userBaseDN}}\"\n}",
-                      "options": {
-                        "raw": {
-                          "language": "json"
-                        }
-                      }
-                    },
-                    "url": "{{pfAdminURL}}/pf-admin-api/v1/configStore/org.sourceid.oauth20.token.AccessGrantManagerLDAPPingDirectoryImpl/SearchBase"
-                  },
-                  "response": []
-                }
-              ],
-              "_postman_id": "fb9c6e13-51de-424c-a659-c12dedc6ea9a",
-              "_postman_isSubFolder": true
-            },
-            {
-              "name": "Set PD for PF AuthN Sessions",
-              "item": [
-                {
-                  "name": "Set PD for Sessions",
-                  "event": [
-                    {
-                      "listen": "test",
-                      "script": {
-                        "id": "526c5a02-2dda-4537-bd6c-9072bb363e1e",
-                        "exec": [
-                          "pm.test(\"PF Sessions in PD\", function () {",
-                          "    pm.response.to.be.ok;",
-                          "});"
-                        ],
-                        "type": "text/javascript"
-                      }
-                    }
-                  ],
-                  "_postman_id": "d5987e11-c134-423b-9c77-aa9cfd718e81",
-                  "protocolProfileBehavior": {
-                    "disableBodyPruning": true
-                  },
-                  "request": {
-                    "method": "PUT",
-                    "header": [
-                      {
-                        "key": "Content-Type",
-                        "name": "Content-Type",
-                        "type": "text",
-                        "value": "application/json"
-                      },
-                      {
-                        "key": "X-XSRF-Header",
-                        "type": "text",
-                        "value": "pingfederate"
-                      }
-                    ],
-                    "body": {
-                      "mode": "raw",
-                      "raw": "    {\n      \"id\": \"PingFederateDSJNDIName\",\n      \"type\": \"STRING\",\n      \"stringValue\": \"LDAP-PingDirectory\"\n    }",
-                      "options": {
-                        "raw": {
-                          "language": "json"
-                        }
-                      }
-                    },
-                    "url": "{{pfAdminURL}}/pf-admin-api/v1/configStore/org.sourceid.saml20.service.session.data.impl.SessionStorageManagerLdapImpl/PingFederateDSJNDIName"
-                  },
-                  "response": []
+                  "_postman_id": "7c0a258f-23c6-44bc-a3cd-ffd3d879f3ae",
+                  "_postman_isSubFolder": true
                 },
-                {
-                  "name": "Set SearchBase for Sessions",
-                  "event": [
-                    {
-                      "listen": "test",
-                      "script": {
-                        "id": "526c5a02-2dda-4537-bd6c-9072bb363e1e",
-                        "exec": [
-                          "pm.test(\"PF Sessions in PD\", function () {",
-                          "    pm.response.to.be.ok;",
-                          "});"
-                        ],
-                        "type": "text/javascript"
-                      }
-                    }
-                  ],
-                  "_postman_id": "da02d6b0-c912-4ffd-9835-d9e345673e1a",
-                  "protocolProfileBehavior": {
-                    "disableBodyPruning": true
-                  },
-                  "request": {
-                    "method": "PUT",
-                    "header": [
-                      {
-                        "key": "Content-Type",
-                        "name": "Content-Type",
-                        "type": "text",
-                        "value": "application/json"
-                      },
-                      {
-                        "key": "X-XSRF-Header",
-                        "type": "text",
-                        "value": "pingfederate"
-                      }
-                    ],
-                    "body": {
-                      "mode": "raw",
-                      "raw": "    {\n      \"id\": \"SearchBase\",\n      \"type\": \"STRING\",\n      \"stringValue\": \"ou=sessions,{{userBaseDN}}\"\n    }",
-                      "options": {
-                        "raw": {
-                          "language": "json"
-                        }
-                      }
-                    },
-                    "url": "{{pfAdminURL}}/pf-admin-api/v1/configStore/org.sourceid.saml20.service.session.data.impl.SessionStorageManagerLdapImpl/SearchBase"
-                  },
-                  "response": []
-                }
-              ],
-              "_postman_id": "7c0a258f-23c6-44bc-a3cd-ffd3d879f3ae",
-              "_postman_isSubFolder": true
-            },
-            {
-              "name": "Enable OGNL Expressions",
-              "item": [
                 {
                   "name": "Enable OGNL Expressions",
-                  "event": [
+                  "item": [
                     {
-                      "listen": "test",
-                      "script": {
-                        "id": "526c5a02-2dda-4537-bd6c-9072bb363e1e",
-                        "exec": [
-                          "pm.test(\"PF Sessions in PD\", function () {",
-                          "    pm.response.to.be.ok;",
-                          "});"
+                      "name": "Enable OGNL Expressions",
+                      "event": [
+                        {
+                          "listen": "test",
+                          "script": {
+                            "id": "526c5a02-2dda-4537-bd6c-9072bb363e1e",
+                            "exec": [
+                              "pm.test(\"PF Sessions in PD\", function () {",
+                              "    pm.response.to.be.ok;",
+                              "});"
+                            ],
+                            "type": "text/javascript"
+                          }
+                        }
+                      ],
+                      "_postman_id": "e6cab341-bf7f-447b-adc5-a82b86992e26",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "method": "PUT",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "name": "Content-Type",
+                            "type": "text",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "X-XSRF-Header",
+                            "type": "text",
+                            "value": "pingfederate"
+                          }
                         ],
-                        "type": "text/javascript"
-                      }
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n    \"id\": \"evaluateExpressions\",\n    \"type\": \"STRING\",\n    \"stringValue\": \"true\"\n}",
+                          "options": {
+                            "raw": {
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": "{{pfAdminURL}}/pf-admin-api/v1/configStore/org.sourceid.common.ExpressionManager/evaluateExpressions"
+                      },
+                      "response": []
                     }
                   ],
-                  "_postman_id": "e6cab341-bf7f-447b-adc5-a82b86992e26",
-                  "protocolProfileBehavior": {
-                    "disableBodyPruning": true
-                  },
-                  "request": {
-                    "method": "PUT",
-                    "header": [
-                      {
-                        "key": "Content-Type",
-                        "name": "Content-Type",
-                        "type": "text",
-                        "value": "application/json"
-                      },
-                      {
-                        "key": "X-XSRF-Header",
-                        "type": "text",
-                        "value": "pingfederate"
-                      }
-                    ],
-                    "body": {
-                      "mode": "raw",
-                      "raw": "{\n    \"id\": \"evaluateExpressions\",\n    \"type\": \"STRING\",\n    \"stringValue\": \"true\"\n}",
-                      "options": {
-                        "raw": {
-                          "language": "json"
-                        }
-                      }
-                    },
-                    "url": "{{pfAdminURL}}/pf-admin-api/v1/configStore/org.sourceid.common.ExpressionManager/evaluateExpressions"
-                  },
-                  "response": []
+                  "_postman_id": "5eb9ce0a-b841-420b-9e25-0085ce782e3d",
+                  "_postman_isSubFolder": true
                 }
               ],
-              "_postman_id": "5eb9ce0a-b841-420b-9e25-0085ce782e3d",
+              "_postman_id": "06f9d917-a0ba-4c6e-b613-7af57370a7d2",
+              "description": "Calls made using the `/config-store` API to modify the server",
               "_postman_isSubFolder": true
             },
             {
@@ -3694,7 +3810,8 @@
                         "raw": {}
                       }
                     },
-                    "url": "{{pfAdminURL}}/pf-admin-api/v1/passwordCredentialValidators"
+                    "url": "{{pfAdminURL}}/pf-admin-api/v1/passwordCredentialValidators",
+                    "description": "https://docs.pingidentity.com/csh?Product=pf-latest&topicname=obh1564002976555.html"
                   },
                   "response": []
                 }
@@ -3787,7 +3904,8 @@
                         "raw": {}
                       }
                     },
-                    "url": "{{pfAdminURL}}/pf-admin-api/v1/authenticationPolicyContracts"
+                    "url": "{{pfAdminURL}}/pf-admin-api/v1/authenticationPolicyContracts",
+                    "description": "https://docs.pingidentity.com/csh?Product=pf-latest&topicname=udz1564002989838.html\n\nCreates Policy Contract that has the minimum information for O365 and PingOne for Enterprise"
                   },
                   "response": []
                 }
@@ -3846,7 +3964,8 @@
                   "raw": "{\n    \"id\": \"authnExp\",\n    \"name\": \"AuthN Experience\",\n    \"pluginDescriptorRef\": {\n        \"id\": \"com.pingidentity.pf.selectors.ExtendedPropertyAuthnSelector\"\n    },\n    \"configuration\": {\n        \"tables\": [],\n        \"fields\": [\n            {\n                \"name\": \"Extended Property\",\n                \"value\": \"authNexp\"\n            }\n        ]\n    },\n    \"attributeContract\": {\n        \"extendedAttributes\": [\n            {\n                \"name\": \"Basic\"\n            },\n            {\n                \"name\": \"MFA\"\n            },\n            {\n                \"name\": \"Passwordless\"\n            }\n        ]\n    }\n}",
                   "options": {}
                 },
-                "url": "{{pfAdminURL}}/pf-admin-api/v1/authenticationSelectors"
+                "url": "{{pfAdminURL}}/pf-admin-api/v1/authenticationSelectors",
+                "description": "https://docs.pingidentity.com/csh?Product=pf-latest&topicname=ndr1564002987357.html"
               },
               "response": []
             },
@@ -3983,7 +4102,8 @@
                         }
                       }
                     },
-                    "url": "{{pfAdminURL}}/pf-admin-api/v1/oauth/authServerSettings"
+                    "url": "{{pfAdminURL}}/pf-admin-api/v1/oauth/authServerSettings",
+                    "description": "https://docs.pingidentity.com/csh?Product=pf-latest&topicname=ird1564002990806.html"
                   },
                   "response": []
                 }
@@ -4225,6 +4345,7 @@
                     }
                   ],
                   "_postman_id": "89c2f01b-e4b2-46b5-81e0-52c1bac602ce",
+                  "description": "https://docs.pingidentity.com/csh?Product=pf-latest&topicname=rbk1564002990993.html\n\nCreates the basic OIDC Scopes:\n\n* openid\n* address\n* email\n* phone\n* profile",
                   "_postman_isSubFolder": true
                 }
               ],
@@ -4277,7 +4398,8 @@
                         "raw": {}
                       }
                     },
-                    "url": "{{pfAdminURL}}/pf-admin-api/v1/oauth/authenticationPolicyContractMappings"
+                    "url": "{{pfAdminURL}}/pf-admin-api/v1/oauth/authenticationPolicyContractMappings",
+                    "description": "https://docs.pingidentity.com/csh?Product=pf-latest&topicname=enh1564002993753.html"
                   },
                   "response": []
                 }
@@ -4331,7 +4453,8 @@
                         "raw": {}
                       }
                     },
-                    "url": "{{pfAdminURL}}/pf-admin-api/v1/oauth/accessTokenManagers"
+                    "url": "{{pfAdminURL}}/pf-admin-api/v1/oauth/accessTokenManagers",
+                    "description": "https://docs.pingidentity.com/csh?Product=pf-latest&topicname=srl1564002994713.html"
                   },
                   "response": []
                 }
@@ -4385,7 +4508,8 @@
                         "raw": {}
                       }
                     },
-                    "url": "{{pfAdminURL}}/pf-admin-api/v1/oauth/accessTokenMappings"
+                    "url": "{{pfAdminURL}}/pf-admin-api/v1/oauth/accessTokenMappings",
+                    "description": "https://docs.pingidentity.com/csh?Product=pf-latest&topicname=jfx1564002995189.html"
                   },
                   "response": []
                 }
@@ -4438,7 +4562,8 @@
                         "raw": {}
                       }
                     },
-                    "url": "{{pfAdminURL}}/pf-admin-api/v1/oauth/openIdConnect/policies"
+                    "url": "{{pfAdminURL}}/pf-admin-api/v1/oauth/openIdConnect/policies",
+                    "description": "https://docs.pingidentity.com/csh?Product=pf-latest&topicname=dkd1564002996125.html"
                   },
                   "response": []
                 }
@@ -4571,7 +4696,8 @@
                             "raw": {}
                           }
                         },
-                        "url": "{{pfAdminURL}}/pf-admin-api/v1/dataStores"
+                        "url": "{{pfAdminURL}}/pf-admin-api/v1/dataStores",
+                        "description": "https://docs.pingidentity.com/csh?Product=pf-latest&topicname=dkd1564002996125.html"
                       },
                       "response": []
                     },
@@ -4627,7 +4753,8 @@
                             "raw": {}
                           }
                         },
-                        "url": "{{pfAdminURL}}/pf-admin-api/v1/passwordCredentialValidators"
+                        "url": "{{pfAdminURL}}/pf-admin-api/v1/passwordCredentialValidators",
+                        "description": "https://docs.pingidentity.com/csh?Product=pf-latest&topicname=obh1564002976555.html"
                       },
                       "response": []
                     },
@@ -4683,7 +4810,8 @@
                             "raw": {}
                           }
                         },
-                        "url": "{{pfAdminURL}}/pf-admin-api/v1/kerberos/realms"
+                        "url": "{{pfAdminURL}}/pf-admin-api/v1/kerberos/realms",
+                        "description": "https://docs.pingidentity.com/csh?Product=pf-latest&topicname=cma1564002979158.html"
                       },
                       "response": []
                     }
@@ -4854,7 +4982,8 @@
                         "raw": {}
                       }
                     },
-                    "url": "{{pfAdminURL}}/pf-admin-api/v1/idp/adapters"
+                    "url": "{{pfAdminURL}}/pf-admin-api/v1/idp/adapters",
+                    "description": "https://docs.pingidentity.com/csh?Product=pf-latest&topicname=ykt1564003023206.html"
                   },
                   "response": []
                 },
@@ -4910,7 +5039,8 @@
                         "raw": {}
                       }
                     },
-                    "url": "{{pfAdminURL}}/pf-admin-api/v1/idp/adapters"
+                    "url": "{{pfAdminURL}}/pf-admin-api/v1/idp/adapters",
+                    "description": "https://docs.pingidentity.com/csh?Product=pf-latest&topicname=dri1564003022949.html"
                   },
                   "response": []
                 },
@@ -4966,13 +5096,14 @@
                         "raw": {}
                       }
                     },
-                    "url": "{{pfAdminURL}}/pf-admin-api/v1/idp/adapters"
+                    "url": "{{pfAdminURL}}/pf-admin-api/v1/idp/adapters",
+                    "description": "https://docs.pingidentity.com/csh?Product=pf-latest&topicname=iek1564003022460.html"
                   },
                   "response": []
                 }
               ],
               "_postman_id": "56564fd9-9584-488e-8c13-f82eb0db9f7f",
-              "description": "These calls create the IdP Adapters:\n\n* Create LDAP (PD) PCV\n* Add IDP Adapters:\n * HTML Form\n  * PD PCV (From Use Case: PF - Initial)\n  * AD PCV\n * Kerberos\n * PingID\n * Identifier-First",
+              "description": "These calls create the IdP Adapters:\nhttps://docs.pingidentity.com/bundle/pingfederate-100/page/ens1564002998102.html\n\n* Create LDAP (PD) PCV\n* Add IDP Adapters:\n * HTML Form\n  * PD PCV (From Use Case: PF - Initial)\n  * AD PCV\n * Kerberos\n * PingID\n * Identifier-First",
               "event": [
                 {
                   "listen": "prerequest",
@@ -5200,7 +5331,8 @@
                         }
                       }
                     },
-                    "url": "{{pfAdminURL}}/pf-admin-api/v1/session/authenticationSessionPolicies"
+                    "url": "{{pfAdminURL}}/pf-admin-api/v1/session/authenticationSessionPolicies",
+                    "description": "https://docs.pingidentity.com/csh?Product=pf-latest&topicname=pqn1564002990312.html\n\nOverrides Global Session for PingID"
                   },
                   "response": []
                 }
@@ -5286,7 +5418,8 @@
                         "raw": {}
                       }
                     },
-                    "url": "{{pfAdminURL}}/pf-admin-api/v1/authenticationPolicies/default"
+                    "url": "{{pfAdminURL}}/pf-admin-api/v1/authenticationPolicies/default",
+                    "description": "https://docs.pingidentity.com/csh?Product=pf-latest&topicname=qmq1564002987890.html"
                   },
                   "response": []
                 }
@@ -5362,7 +5495,8 @@
                         "raw": {}
                       }
                     },
-                    "url": "{{pfAdminURL}}/pf-admin-api/v1/oauth/openIdConnect/policies/OIDCPolicyDefault"
+                    "url": "{{pfAdminURL}}/pf-admin-api/v1/oauth/openIdConnect/policies/OIDCPolicyDefault",
+                    "description": "https://docs.pingidentity.com/csh?Product=pf-latest&topicname=dkd1564002996125.html"
                   },
                   "response": []
                 }
@@ -5847,7 +5981,8 @@
                     }
                   }
                 },
-                "url": "{{pfAdminURL}}/pf-admin-api/v1/oauth/authServerSettings"
+                "url": "{{pfAdminURL}}/pf-admin-api/v1/oauth/authServerSettings",
+                "description": "https://docs.pingidentity.com/csh?Product=pf-latest&topicname=ird1564002990806.html"
               },
               "response": []
             },
@@ -5893,7 +6028,8 @@
                     "raw": {}
                   }
                 },
-                "url": "{{pfAdminURL}}/pf-admin-api/v1/oauth/openIdConnect/policies"
+                "url": "{{pfAdminURL}}/pf-admin-api/v1/oauth/openIdConnect/policies",
+                "description": "https://docs.pingidentity.com/csh?Product=pf-latest&topicname=dkd1564002996125.html"
               },
               "response": []
             },
@@ -5940,7 +6076,7 @@
                   }
                 },
                 "url": "{{pfAdminURL}}/pf-admin-api/v1/oauth/clients",
-                "description": "This client can be used to issue tokens for several Ping Products (using Exclusive Scopes):\n\n* PD DirAPI (`pd:dir:access`)\n* PD Consent API (`pd:consents:unpriv` | `pd:consents:priv`)\n* PD Delegated Admin App (`urn:pingidentity:directory-delegated-admin`)\n* PF Dynamic Client Registration (`pf:client:reg`)"
+                "description": "https://docs.pingidentity.com/csh?Product=pf-latest&topicname=roj1564002966901.html\n\nThis client can be used to issue tokens for several Ping Products (using Exclusive Scopes):\n\n* PingCentral"
               },
               "response": []
             }
@@ -6053,7 +6189,7 @@
                   }
                 },
                 "url": "{{pfAdminURL}}/pf-admin-api/v1/idp/spConnections",
-                "description": "Dummy SP Connection -- sends you to https://httpbin.org/anything"
+                "description": "https://docs.pingidentity.com/csh?Product=pf-latest&topicname=ikr1564002999528.html\n\nDummy SP Connection -- sends you to https://httpbin.org/anything"
               },
               "response": []
             }
@@ -6130,7 +6266,7 @@
                   }
                 },
                 "url": "{{pfAdminURL}}/pf-admin-api/v1/oauth/clients",
-                "description": "This client can be used to issue tokens for several Ping Products (using Exclusive Scopes):\n\n* PD DirAPI (`pd:dir:access`)\n* PD Consent API (`pd:consents:unpriv` | `pd:consents:priv`)\n* PD Delegated Admin App (`urn:pingidentity:directory-delegated-admin`)\n* PF Dynamic Client Registration (`pf:client:reg`)"
+                "description": "https://docs.pingidentity.com/csh?Product=pf-latest&topicname=roj1564002966901.html\n\nThis client can be used to demonstrate OIDC User AuthN (Authz Code \\ Implicit) flows"
               },
               "response": []
             },
@@ -6176,7 +6312,8 @@
                     "raw": {}
                   }
                 },
-                "url": "{{pfAdminURL}}/pf-admin-api/v1/oauth/clients"
+                "url": "{{pfAdminURL}}/pf-admin-api/v1/oauth/clients",
+                "description": "https://docs.pingidentity.com/csh?Product=pf-latest&topicname=roj1564002966901.html\n\nThis client can be used to Introspect `access_token`s"
               },
               "response": []
             },
@@ -6217,13 +6354,13 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n    \"clientId\": \"pingservices\",\n    \"enabled\": true,\n    \"redirectUris\": [],\n    \"grantTypes\": [\n        \"CLIENT_CREDENTIALS\"\n    ],\n    \"name\": \"Ping Services\",\n    \"description\": \"This client is used by Services to ask for API Tokens (Client_Credentials)\",\n    \"refreshRolling\": \"SERVER_DEFAULT\",\n    \"persistentGrantExpirationType\": \"SERVER_DEFAULT\",\n    \"persistentGrantExpirationTime\": 0,\n    \"persistentGrantExpirationTimeUnit\": \"DAYS\",\n    \"persistentGrantIdleTimeoutType\": \"SERVER_DEFAULT\",\n    \"persistentGrantIdleTimeout\": 0,\n    \"persistentGrantIdleTimeoutTimeUnit\": \"DAYS\",\n    \"bypassApprovalPage\": true,\n    \"restrictScopes\": false,\n    \"restrictedScopes\": [],\n    \"exclusiveScopes\": [],\n    \"restrictedResponseTypes\": [],\n    \"defaultAccessTokenManagerRef\": {\n        \"id\": \"jwtDefault\"\n    },\n    \"validateUsingAllEligibleAtms\": false,\n    \"oidcPolicy\": {\n        \"grantAccessSessionRevocationApi\": false,\n        \"pingAccessLogoutCapable\": false,\n        \"pairwiseIdentifierUserType\": false\n    },\n    \"clientAuth\": {\n        \"type\": \"SECRET\",\n        \"secret\": \"{{oauthSecret}}\",\n        \"enforceReplayPrevention\": false\n    },\n    \"extendedParameters\": {\n        \"authNexp\": {}\n    },\n    \"deviceFlowSettingType\": \"SERVER_DEFAULT\",\n    \"requireProofKeyForCodeExchange\": false,\n    \"requireSignedRequests\": false\n}",
+                  "raw": "{\n    \"clientId\": \"PingServices\",\n    \"enabled\": true,\n    \"redirectUris\": [],\n    \"grantTypes\": [\n        \"CLIENT_CREDENTIALS\"\n    ],\n    \"name\": \"Ping Services\",\n    \"description\": \"This client is used by Services to ask for API Tokens (Client_Credentials)\",\n    \"refreshRolling\": \"SERVER_DEFAULT\",\n    \"persistentGrantExpirationType\": \"SERVER_DEFAULT\",\n    \"persistentGrantExpirationTime\": 0,\n    \"persistentGrantExpirationTimeUnit\": \"DAYS\",\n    \"persistentGrantIdleTimeoutType\": \"SERVER_DEFAULT\",\n    \"persistentGrantIdleTimeout\": 0,\n    \"persistentGrantIdleTimeoutTimeUnit\": \"DAYS\",\n    \"bypassApprovalPage\": true,\n    \"restrictScopes\": false,\n    \"restrictedScopes\": [],\n    \"exclusiveScopes\": [],\n    \"restrictedResponseTypes\": [],\n    \"defaultAccessTokenManagerRef\": {\n        \"id\": \"jwtDefault\"\n    },\n    \"validateUsingAllEligibleAtms\": false,\n    \"oidcPolicy\": {\n        \"grantAccessSessionRevocationApi\": false,\n        \"pingAccessLogoutCapable\": false,\n        \"pairwiseIdentifierUserType\": false\n    },\n    \"clientAuth\": {\n        \"type\": \"SECRET\",\n        \"secret\": \"{{oauthSecret}}\",\n        \"enforceReplayPrevention\": false\n    },\n    \"extendedParameters\": {\n        \"authNexp\": {}\n    },\n    \"deviceFlowSettingType\": \"SERVER_DEFAULT\",\n    \"requireProofKeyForCodeExchange\": false,\n    \"requireSignedRequests\": false\n}",
                   "options": {
                     "raw": {}
                   }
                 },
                 "url": "{{pfAdminURL}}/pf-admin-api/v1/oauth/clients",
-                "description": "This client can be used to issue tokens for several Ping Products (using Exclusive Scopes):\n\n* PD DirAPI (`pd:dir:access`)\n* PD Consent API (`pd:consents:unpriv` | `pd:consents:priv`)\n* PD Delegated Admin App (`urn:pingidentity:directory-delegated-admin`)\n* PF Dynamic Client Registration (`pf:client:reg`)"
+                "description": "https://docs.pingidentity.com/csh?Product=pf-latest&topicname=roj1564002966901.html\n\nThis client can be used to issue `client_credential` Service tokens"
               },
               "response": []
             }
@@ -8157,7 +8294,8 @@
                         "raw": {}
                       }
                     },
-                    "url": "{{pfAdminURL}}/pf-admin-api/v1/idp/adapters/HTMLForm"
+                    "url": "{{pfAdminURL}}/pf-admin-api/v1/idp/adapters/HTMLForm",
+                    "description": "https://docs.pingidentity.com/csh?Product=pf-latest&topicname=dri1564003022949.html\n\nReplaces the AD PCV with the PD PCV"
                   },
                   "response": []
                 },
@@ -8213,7 +8351,8 @@
                         "raw": {}
                       }
                     },
-                    "url": "{{pfAdminURL}}/pf-admin-api/v1/idp/adapters/IDFirst"
+                    "url": "{{pfAdminURL}}/pf-admin-api/v1/idp/adapters/IDFirst",
+                    "description": "https://docs.pingidentity.com/csh?Product=pf-latest&topicname=iek1564003022460.html\n\nReplaces the AD Lookup with a PD one"
                   },
                   "response": []
                 }
@@ -8282,7 +8421,7 @@
                       }
                     },
                     "url": "{{pfAdminURL}}/pf-admin-api/v1/authenticationPolicies/default",
-                    "description": "Swaps the HTML Form fulfillment to PD attributes"
+                    "description": "https://docs.pingidentity.com/csh?Product=pf-latest&topicname=qmq1564002987890.html\n\nSwaps the HTML Form fulfillment to PD attributes"
                   },
                   "response": []
                 }
@@ -8397,91 +8536,91 @@
   ],
   "variable": [
     {
-      "id": "c998c19b-d08b-41f4-b1bc-cb3060769513",
+      "id": "af003142-6646-4371-b08c-2fbf2f504555",
       "key": "pfAdminURL",
       "value": "https://pingfederate:9999",
       "type": "string"
     },
     {
-      "id": "fc6a8fde-f89d-4d5b-8006-15f459ba538e",
+      "id": "bc21c2ef-8360-4866-a3a5-5771009ae31c",
       "key": "pdAdminUrl",
       "value": "https://pingdirectory:443",
       "type": "string"
     },
     {
-      "id": "83eebec9-c405-4615-86fc-d01786b8dd26",
+      "id": "8551c974-5c87-4f01-a077-e8e86b210bf0",
       "key": "pdsAdminURL",
       "value": "https://pingdatasync:443",
       "type": "string"
     },
     {
-      "id": "8fe970b5-8c78-4dfb-bcde-c6f446969f13",
+      "id": "7ef00765-6da3-4075-8805-a726fcb2fd8a",
       "key": "pfAdmin",
       "value": "api-admin",
       "type": "string"
     },
     {
-      "id": "db205c7f-7b4d-43f2-8e94-9a40c6790ae0",
+      "id": "83904aad-936e-4814-aaa6-40f1a3699e82",
       "key": "pfAdminPwd",
       "value": "{{globalPwd}}",
       "type": "string"
     },
     {
-      "id": "aa34633c-70cf-4ec7-88de-91c007bd978b",
+      "id": "912b32c5-d449-4c3d-a0cb-1fc8667e26bb",
       "key": "pdAdmin",
       "value": "cn=administrator",
       "type": "string"
     },
     {
-      "id": "8978cced-c58f-463b-afda-76c50a2e32af",
+      "id": "3efbd6ef-a94f-4428-9b05-99fa74b489ea",
       "key": "pdAdminPwd",
       "value": "{{globalPwd}}",
       "type": "string"
     },
     {
-      "id": "1c9ad7fb-76a1-41b5-a013-3c3e3b6d87be",
+      "id": "8dae5f37-6b2b-4489-a851-ea849e87d5e9",
       "key": "pdsAdmin",
       "value": "cn=administrator",
       "type": "string"
     },
     {
-      "id": "79ab91d8-0860-445a-bc36-27038ca4d394",
+      "id": "d4f0a56c-3a1f-4b81-a86d-feead3f0760d",
       "key": "pdsAdminPwd",
       "value": "{{globalPwd}}",
       "type": "string"
     },
     {
-      "id": "3f3bd651-3478-4dc3-9a41-6fc5c4cfd263",
+      "id": "3768a793-188c-44c5-bf8d-0aa93114a959",
       "key": "globalPwd",
       "value": "2FederateM0re",
       "type": "string"
     },
     {
-      "id": "c6bfc05f-8a2c-4131-8753-c73e1a95c43a",
+      "id": "6af49733-e480-4cd5-8c2d-b0720fa5d026",
       "key": "adServiceAccount",
       "value": "pingfederate",
       "type": "string"
     },
     {
-      "id": "07998c7d-bf62-4b5d-8310-733f479bf4ec",
+      "id": "c280ec15-c9ed-468c-82cc-4930f20b4fce",
       "key": "adServicePwd",
       "value": "P@ssword99",
       "type": "string"
     },
     {
-      "id": "b11795fa-54c6-45d6-b122-b217669a61b9",
+      "id": "f0a6c675-196a-4315-8165-855fe72b931b",
       "key": "adUserContainer",
       "value": "cn=Users",
       "type": "string"
     },
     {
-      "id": "42dccd96-7924-49d7-87dc-f94676e62537",
+      "id": "93e14675-daf6-4f24-8bb1-1a16539d3d01",
       "key": "adGroupContainer",
       "value": "ou=Groups",
       "type": "string"
     },
     {
-      "id": "fa90322f-4309-4c0b-8327-192c3e4cbff8",
+      "id": "f14e5b34-510a-4181-8fb3-61acb46f7d49",
       "key": "oauthSecret",
       "value": "{{globalPwd}}",
       "type": "string"
