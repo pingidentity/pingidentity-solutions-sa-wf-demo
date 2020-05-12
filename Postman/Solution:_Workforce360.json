@@ -6313,7 +6313,7 @@
                   }
                 },
                 "url": "{{pfAdminURL}}/pf-admin-api/v1/oauth/clients",
-                "description": "https://docs.pingidentity.com/csh?Product=pf-latest&topicname=roj1564002966901.html\n\nThis client can be used to Introspect `access_token`s"
+                "description": "https://docs.pingidentity.com/csh?Product=pf-latest&topicname=roj1564002966901.html\n\nThis client can be used to Introspect `access_token`"
               },
               "response": []
             },
@@ -8536,91 +8536,91 @@
   ],
   "variable": [
     {
-      "id": "68aa4362-f69d-40f5-b2c2-2d1ecb2726fc",
+      "id": "5d500c40-f954-4485-9a00-e0c37f9ec67c",
       "key": "pfAdminURL",
       "value": "https://pingfederate:9999",
       "type": "string"
     },
     {
-      "id": "fa967432-4ec2-4027-aeed-7587269be6a8",
+      "id": "eac1b06a-8b7b-4fac-80f1-f3b94f6119be",
       "key": "pdAdminUrl",
       "value": "https://pingdirectory:443",
       "type": "string"
     },
     {
-      "id": "2eac0fb4-bf8b-425a-a4a3-179891ddabb8",
+      "id": "6f57c1ed-0b2c-408d-8834-dcc6c438da5e",
       "key": "pdsAdminURL",
       "value": "https://pingdatasync:443",
       "type": "string"
     },
     {
-      "id": "60e8e121-e55a-4b86-8930-06e64a358d90",
+      "id": "3a1503e4-2396-428c-be35-5650f0d67c5e",
       "key": "pfAdmin",
       "value": "api-admin",
       "type": "string"
     },
     {
-      "id": "f8f608df-18a4-4fa5-a2ba-d5e30dedafe2",
+      "id": "b09ca018-f68b-4862-b29a-ac42da85ed3f",
       "key": "pfAdminPwd",
       "value": "{{globalPwd}}",
       "type": "string"
     },
     {
-      "id": "f2fd9fc0-4c55-4ee8-a4fc-36b16754eddc",
+      "id": "241b0483-d5a9-4ea1-a847-5ee0e356823b",
       "key": "pdAdmin",
       "value": "cn=administrator",
       "type": "string"
     },
     {
-      "id": "83caa413-b74b-4ab3-9a2b-1ba7a8e8d8c6",
+      "id": "30279c24-189c-4ae6-8250-2a19a5fd0b77",
       "key": "pdAdminPwd",
       "value": "{{globalPwd}}",
       "type": "string"
     },
     {
-      "id": "ead80442-73d0-4ced-b99e-7f67e5d06016",
+      "id": "97fac92d-90ba-4f42-94b8-5eb8799f3aac",
       "key": "pdsAdmin",
       "value": "cn=administrator",
       "type": "string"
     },
     {
-      "id": "a456730d-cb17-47f1-9992-b40597a39f89",
+      "id": "20c62166-f62a-4d59-8e41-876e2c756ead",
       "key": "pdsAdminPwd",
       "value": "{{globalPwd}}",
       "type": "string"
     },
     {
-      "id": "8542e6bb-4362-4ad8-b805-73b68d268c3e",
+      "id": "d8d5ec3c-ecfd-452c-b152-100f7412c965",
       "key": "globalPwd",
       "value": "2FederateM0re",
       "type": "string"
     },
     {
-      "id": "dd375913-785b-4f95-94a8-5de3c24eb84d",
+      "id": "51af5648-f05f-43d1-9536-3955f62ae354",
       "key": "adServiceAccount",
       "value": "pingfederate",
       "type": "string"
     },
     {
-      "id": "66666f16-c939-4735-859e-201ec325a4c8",
+      "id": "5836c545-52f9-4004-b288-d537bb0b2e87",
       "key": "adServicePwd",
       "value": "P@ssword99",
       "type": "string"
     },
     {
-      "id": "a51f409d-bc16-4f49-b56c-35c2742232eb",
+      "id": "4457ba87-a27b-4b4d-ba85-44fb1ae3ff9d",
       "key": "adUserContainer",
       "value": "cn=Users",
       "type": "string"
     },
     {
-      "id": "fde2604e-a865-4142-bb9e-f4b7aadd47d3",
+      "id": "cb8a8f48-6b4a-4993-9c02-050cbd549bb1",
       "key": "adGroupContainer",
       "value": "ou=Groups",
       "type": "string"
     },
     {
-      "id": "65cc86b1-6de9-40a8-b0ac-a9476a1fa350",
+      "id": "bf584f74-fee3-4740-9c78-4f0472555fe5",
       "key": "oauthSecret",
       "value": "{{globalPwd}}",
       "type": "string"
