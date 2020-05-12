@@ -2973,53 +2973,6 @@
               "response": []
             },
             {
-              "name": "Update API Admin Account with version Roles Copy",
-              "event": [
-                {
-                  "listen": "test",
-                  "script": {
-                    "id": "12021d19-693c-481a-8663-e1715955fd72",
-                    "exec": [
-                      "pm.test(\"API Admin account created\", function () {",
-                      "    pm.response.to.be.ok;",
-                      "});"
-                    ],
-                    "type": "text/javascript"
-                  }
-                }
-              ],
-              "_postman_id": "4a501a9e-4576-4220-a900-7deca57cde37",
-              "protocolProfileBehavior": {
-                "disableBodyPruning": true
-              },
-              "request": {
-                "method": "PUT",
-                "header": [
-                  {
-                    "key": "Content-Type",
-                    "name": "Content-Type",
-                    "type": "text",
-                    "value": "application/json"
-                  },
-                  {
-                    "key": "X-XSRF-Header",
-                    "type": "text",
-                    "value": "pingfederate"
-                  }
-                ],
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n    \"username\": \"{{pfAdmin}}\",\n    \"active\": \"true\",\n    \"description\": \"Used to perform Admin API calls\",\n    \"encryptedPassword\": \"{{encryptedPassword}}\",\n    \"roles\": {{pfAdminRoles}}\n}",
-                  "options": {
-                    "raw": {}
-                  }
-                },
-                "url": "{{pfAdminURL}}/pf-admin-api/v1/administrativeAccounts/{{pfAdmin}}",
-                "description": "PF 10.1+ adds a Role that is needed to use the `/config-store` API. \n\nThis call puts the right roles onto the created Admin account"
-              },
-              "response": []
-            },
-            {
               "name": "Get License",
               "event": [
                 {
@@ -8583,91 +8536,91 @@
   ],
   "variable": [
     {
-      "id": "d20996fe-7d3a-4710-a71a-6cdcb67f5f3b",
+      "id": "68aa4362-f69d-40f5-b2c2-2d1ecb2726fc",
       "key": "pfAdminURL",
       "value": "https://pingfederate:9999",
       "type": "string"
     },
     {
-      "id": "a9efa473-f93f-4c56-8c75-6b84900e2cd4",
+      "id": "fa967432-4ec2-4027-aeed-7587269be6a8",
       "key": "pdAdminUrl",
       "value": "https://pingdirectory:443",
       "type": "string"
     },
     {
-      "id": "582309c1-dc5a-4eb7-971e-77a251ad7e59",
+      "id": "2eac0fb4-bf8b-425a-a4a3-179891ddabb8",
       "key": "pdsAdminURL",
       "value": "https://pingdatasync:443",
       "type": "string"
     },
     {
-      "id": "e1fcc896-eba8-48ad-81af-87a3e52c4f50",
+      "id": "60e8e121-e55a-4b86-8930-06e64a358d90",
       "key": "pfAdmin",
       "value": "api-admin",
       "type": "string"
     },
     {
-      "id": "63f34639-0d97-4b9d-8ed7-9b0cd0a3e0af",
+      "id": "f8f608df-18a4-4fa5-a2ba-d5e30dedafe2",
       "key": "pfAdminPwd",
       "value": "{{globalPwd}}",
       "type": "string"
     },
     {
-      "id": "ee153d9e-ac50-4793-8713-70165d27d246",
+      "id": "f2fd9fc0-4c55-4ee8-a4fc-36b16754eddc",
       "key": "pdAdmin",
       "value": "cn=administrator",
       "type": "string"
     },
     {
-      "id": "b56f66d5-91d8-4e51-b897-e91d0018802b",
+      "id": "83caa413-b74b-4ab3-9a2b-1ba7a8e8d8c6",
       "key": "pdAdminPwd",
       "value": "{{globalPwd}}",
       "type": "string"
     },
     {
-      "id": "83ef6999-b04b-4a87-9800-31531bc28ba7",
+      "id": "ead80442-73d0-4ced-b99e-7f67e5d06016",
       "key": "pdsAdmin",
       "value": "cn=administrator",
       "type": "string"
     },
     {
-      "id": "41545073-bcff-4748-8c73-17c5c3a4ebb5",
+      "id": "a456730d-cb17-47f1-9992-b40597a39f89",
       "key": "pdsAdminPwd",
       "value": "{{globalPwd}}",
       "type": "string"
     },
     {
-      "id": "c2812ef9-7d2b-465a-beaf-616b26f922ff",
+      "id": "8542e6bb-4362-4ad8-b805-73b68d268c3e",
       "key": "globalPwd",
       "value": "2FederateM0re",
       "type": "string"
     },
     {
-      "id": "c04a47d2-f01a-4a9d-b89b-09df99a70985",
+      "id": "dd375913-785b-4f95-94a8-5de3c24eb84d",
       "key": "adServiceAccount",
       "value": "pingfederate",
       "type": "string"
     },
     {
-      "id": "4c341d7a-bc43-4213-b4de-68e15acfecc5",
+      "id": "66666f16-c939-4735-859e-201ec325a4c8",
       "key": "adServicePwd",
       "value": "P@ssword99",
       "type": "string"
     },
     {
-      "id": "001df84c-f917-47a4-a1c7-399a2a4351b9",
+      "id": "a51f409d-bc16-4f49-b56c-35c2742232eb",
       "key": "adUserContainer",
       "value": "cn=Users",
       "type": "string"
     },
     {
-      "id": "3bf65810-848f-48ab-942f-cd2991d5f672",
+      "id": "fde2604e-a865-4142-bb9e-f4b7aadd47d3",
       "key": "adGroupContainer",
       "value": "ou=Groups",
       "type": "string"
     },
     {
-      "id": "4ea0384a-5b54-47f8-92b4-c104daba2239",
+      "id": "65cc86b1-6de9-40a8-b0ac-a9476a1fa350",
       "key": "oauthSecret",
       "value": "{{globalPwd}}",
       "type": "string"
