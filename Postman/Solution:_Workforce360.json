@@ -2926,58 +2926,6 @@
               "response": []
             },
             {
-              "name": "Check Version Copy",
-              "event": [
-                {
-                  "listen": "test",
-                  "script": {
-                    "id": "03b0c02c-0a1b-4357-95d3-770b65dfb714",
-                    "exec": [
-                      "pm.test(\"Version retrieved\", function () {",
-                      "    pm.response.to.be.ok;",
-                      "    var response = pm.response.json();",
-                      "    ",
-                      "    // Split the Version into numbers",
-                      "    var version = response.version.split(\".\");",
-                      "    var major = parseInt(version[0]);",
-                      "    var minor = parseInt(version[1]);",
-                      "    // Combine into a single number (makes the comparison easier)",
-                      "    var currentVersion = Number(major + minor/10);",
-                      "",
-                      "    // Check to see if EXPRESSION_ADMIN is needed (v10.1+)",
-                      "    if(currentVersion >= 10.1){",
-                      "        console.log(\"Creating v10.1+ Admin\");",
-                      "        var pfAdminRoles = \"[ \\\"USER_ADMINISTRATOR\\\", \\\"CRYPTO_ADMINISTRATOR\\\", \\\"ADMINISTRATOR\\\", \\\"EXPRESSION_ADMINISTRATOR\\\" ]\";",
-                      "    }",
-                      "    else{",
-                      "        var pfAdminRoles = \"[ \\\"USER_ADMINISTRATOR\\\", \\\"CRYPTO_ADMINISTRATOR\\\", \\\"ADMINISTRATOR\\\" ]\";",
-                      "        }",
-                      "    pm.environment.set(\"pfAdminRoles\", pfAdminRoles);",
-                      "});"
-                    ],
-                    "type": "text/javascript"
-                  }
-                }
-              ],
-              "_postman_id": "f2a8a48f-522a-40a1-b7af-69ead87029ac",
-              "protocolProfileBehavior": {
-                "disableBodyPruning": true
-              },
-              "request": {
-                "method": "GET",
-                "header": [
-                  {
-                    "key": "X-XSRF-Header",
-                    "value": "pingfederate",
-                    "type": "text"
-                  }
-                ],
-                "url": "{{pfAdminURL}}/pf-admin-api/v1/version",
-                "description": "Used to detect the running version of PF and makes version dependant changes. \nThere's a Test Script that performs the actions.\n\n* Admin Account Role: 10.1+ needs additional Role"
-              },
-              "response": []
-            },
-            {
               "name": "Update API Admin Account with version Roles",
               "event": [
                 {
@@ -8588,91 +8536,91 @@
   ],
   "variable": [
     {
-      "id": "c62fd679-76ff-44c2-9d6a-a4d63962ac91",
+      "id": "6bf42004-0b36-42b3-a567-aba6a4c8fda4",
       "key": "pfAdminURL",
       "value": "https://pingfederate:9999",
       "type": "string"
     },
     {
-      "id": "e2eebac5-6df3-4f59-8ca6-af3ff9d118dd",
+      "id": "9f4a0105-beb6-4c74-be18-f7c8ed812def",
       "key": "pdAdminUrl",
       "value": "https://pingdirectory:443",
       "type": "string"
     },
     {
-      "id": "6eb957d0-2ddd-45ca-a337-4ad829d95572",
+      "id": "e3fd5d61-9447-43bd-a602-baa7bab9be71",
       "key": "pdsAdminURL",
       "value": "https://pingdatasync:443",
       "type": "string"
     },
     {
-      "id": "f2027f17-5822-4a44-9b37-9fb6c9f6804e",
+      "id": "c4417ca6-36b6-43b9-b29b-fcd265334838",
       "key": "pfAdmin",
       "value": "api-admin",
       "type": "string"
     },
     {
-      "id": "60a34e31-1457-4cea-8900-dca256887764",
+      "id": "8dc5ffa8-4515-4cf4-a362-d838b9e2e0a3",
       "key": "pfAdminPwd",
       "value": "{{globalPwd}}",
       "type": "string"
     },
     {
-      "id": "a347ad59-4f45-475b-945f-7cc20222de6a",
+      "id": "3bda32f0-4316-42ad-a36e-6c0c1121b2db",
       "key": "pdAdmin",
       "value": "cn=administrator",
       "type": "string"
     },
     {
-      "id": "b8fa44c6-752b-41c8-91a2-fa2710d3596a",
+      "id": "1bdf6df3-a02b-40d6-8f7f-a97a053a479e",
       "key": "pdAdminPwd",
       "value": "{{globalPwd}}",
       "type": "string"
     },
     {
-      "id": "55c53310-d533-41a9-aabb-764adf61944a",
+      "id": "f17a2260-f2df-4654-b3de-e9205dd887d4",
       "key": "pdsAdmin",
       "value": "cn=administrator",
       "type": "string"
     },
     {
-      "id": "8245b378-2ef0-466b-8645-fa0d7da35b39",
+      "id": "ae177da0-3bac-460f-9f16-c3e8d0def288",
       "key": "pdsAdminPwd",
       "value": "{{globalPwd}}",
       "type": "string"
     },
     {
-      "id": "3ebd8cff-fca9-4590-963d-af83058d3784",
+      "id": "d6fdbec9-a8b1-4337-8b33-97cae26bd196",
       "key": "globalPwd",
       "value": "2FederateM0re",
       "type": "string"
     },
     {
-      "id": "55d80c47-9e3f-4f41-b187-2b3a010250a4",
+      "id": "8beba707-2693-4f8d-bda4-e2bb5b7eb51e",
       "key": "adServiceAccount",
       "value": "pingfederate",
       "type": "string"
     },
     {
-      "id": "b1a8f743-0468-44b4-9e52-a77fef8f4972",
+      "id": "d624ce20-b2d0-4628-8011-ea994b0d17b2",
       "key": "adServicePwd",
       "value": "P@ssword99",
       "type": "string"
     },
     {
-      "id": "b6f8c41d-0911-4fd2-a67b-d3b1d5a15303",
+      "id": "e2b267f7-5635-42dc-8d6d-642fcba8f22a",
       "key": "adUserContainer",
       "value": "cn=Users",
       "type": "string"
     },
     {
-      "id": "9f2dff24-d002-4c42-91da-3f18f0c13032",
+      "id": "c34f65a8-cbfe-42f9-81f7-20f3eb700e83",
       "key": "adGroupContainer",
       "value": "ou=Groups",
       "type": "string"
     },
     {
-      "id": "db07793d-91cf-4df8-9c90-5e5c9899df10",
+      "id": "c3a45476-40d6-4ed4-99e0-25fe29429007",
       "key": "oauthSecret",
       "value": "{{globalPwd}}",
       "type": "string"
