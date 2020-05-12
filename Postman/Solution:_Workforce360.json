@@ -3212,6 +3212,58 @@
                 "description": "https://docs.pingidentity.com/csh?Product=pf-latest&topicname=muj1564002974462.html\n\nThis is used to accept backchannel calls from other services in the stack"
               },
               "response": []
+            },
+            {
+              "name": "Check Version Copy",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "03b0c02c-0a1b-4357-95d3-770b65dfb714",
+                    "exec": [
+                      "pm.test(\"Version retrieved\", function () {",
+                      "    pm.response.to.be.ok;",
+                      "    var response = pm.response.json();",
+                      "    ",
+                      "    // Split the Version into numbers",
+                      "    var version = response.version.split(\".\");",
+                      "    var major = parseInt(version[0]);",
+                      "    var minor = parseInt(version[1]);",
+                      "    // Combine into a single number (makes the comparison easier)",
+                      "    var currentVersion = Number(major + minor/10);",
+                      "",
+                      "    // Check to see if EXPRESSION_ADMIN is needed (v10.1+)",
+                      "    if(currentVersion >= 10.1){",
+                      "        console.log(\"Creating v10.1+ Admin\");",
+                      "        var pfAdminRoles = \"[ \\\"USER_ADMINISTRATOR\\\", \\\"CRYPTO_ADMINISTRATOR\\\", \\\"ADMINISTRATOR\\\", \\\"EXPRESSION_ADMINISTRATOR\\\" ]\";",
+                      "    }",
+                      "    else{",
+                      "        var pfAdminRoles = \"[ \\\"USER_ADMINISTRATOR\\\", \\\"CRYPTO_ADMINISTRATOR\\\", \\\"ADMINISTRATOR\\\" ]\";",
+                      "        }",
+                      "    pm.environment.set(\"pfAdminRoles\", pfAdminRoles);",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "_postman_id": "f2a8a48f-522a-40a1-b7af-69ead87029ac",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "X-XSRF-Header",
+                    "value": "pingfederate",
+                    "type": "text"
+                  }
+                ],
+                "url": "{{pfAdminURL}}/pf-admin-api/v1/version",
+                "description": "Used to detect the running version of PF and makes version dependant changes. \nThere's a Test Script that performs the actions.\n\n* Admin Account Role: 10.1+ needs additional Role"
+              },
+              "response": []
             }
           ],
           "_postman_id": "b251b0d8-2324-4208-a703-e0deeda17db6",
@@ -8536,91 +8588,91 @@
   ],
   "variable": [
     {
-      "id": "0aa739b2-f001-4d65-adbf-a3073e8c2750",
+      "id": "32bbed8d-9f51-4470-adcd-648b07895212",
       "key": "pfAdminURL",
       "value": "https://pingfederate:9999",
       "type": "string"
     },
     {
-      "id": "342d3048-95c3-4a05-81a8-286c0f22dc6b",
+      "id": "10e4c9d1-0a8d-4f68-8ae4-6549d6ab1aaa",
       "key": "pdAdminUrl",
       "value": "https://pingdirectory:443",
       "type": "string"
     },
     {
-      "id": "15bc3c06-dfd5-4113-97dd-12b46bd2f64e",
+      "id": "e95cb857-0df8-4e7e-b04d-0a0fad7edc60",
       "key": "pdsAdminURL",
       "value": "https://pingdatasync:443",
       "type": "string"
     },
     {
-      "id": "d709c80a-0a7f-4714-bd09-6a5c72ec767f",
+      "id": "74ac452e-4a40-4894-a5e0-933d5a4bd796",
       "key": "pfAdmin",
       "value": "api-admin",
       "type": "string"
     },
     {
-      "id": "f7748cbc-0f94-4a4f-8de7-e52563c597b5",
+      "id": "a7e63c1c-a103-4795-b116-ce2de49d3c44",
       "key": "pfAdminPwd",
       "value": "{{globalPwd}}",
       "type": "string"
     },
     {
-      "id": "1e806f82-94f4-4885-9a52-eb09b3b2e43c",
+      "id": "f4f123b2-bca1-486c-90d2-0e43f108918b",
       "key": "pdAdmin",
       "value": "cn=administrator",
       "type": "string"
     },
     {
-      "id": "d3d68e01-972d-4b79-8a78-04e2753f185b",
+      "id": "256788d5-4507-464e-afbf-f7c4c7e8f24b",
       "key": "pdAdminPwd",
       "value": "{{globalPwd}}",
       "type": "string"
     },
     {
-      "id": "13041741-694e-4870-b719-56acd0df71f9",
+      "id": "ee7425e1-5fb3-4bb3-89bd-a6e43e8dbde2",
       "key": "pdsAdmin",
       "value": "cn=administrator",
       "type": "string"
     },
     {
-      "id": "c0499c1a-42ab-4588-bf87-1801062634fe",
+      "id": "318a4c46-2d16-4fbe-84ba-c1d306f84a6b",
       "key": "pdsAdminPwd",
       "value": "{{globalPwd}}",
       "type": "string"
     },
     {
-      "id": "7ca5fc1b-683b-43e4-80fc-966633c66647",
+      "id": "1091a82f-1556-4710-8677-d41d4cfc9900",
       "key": "globalPwd",
       "value": "2FederateM0re",
       "type": "string"
     },
     {
-      "id": "54e3c019-afbb-4be6-9bfe-a8bfeaabdcd2",
+      "id": "642f7dd6-9973-4138-b41d-83ddd2a8e569",
       "key": "adServiceAccount",
       "value": "pingfederate",
       "type": "string"
     },
     {
-      "id": "7de214ad-f5db-4629-bbf0-5fa1bd4d48de",
+      "id": "dd043700-6451-4e25-80b7-71ef61de0fc6",
       "key": "adServicePwd",
       "value": "P@ssword99",
       "type": "string"
     },
     {
-      "id": "e47b65f5-d0c2-474b-8e94-121dbe07eb76",
+      "id": "ac63b362-0a23-400f-b8e7-a880df15ec06",
       "key": "adUserContainer",
       "value": "cn=Users",
       "type": "string"
     },
     {
-      "id": "c59c6ece-138e-401e-a979-3429c652ed4a",
+      "id": "c7bb10d6-bbcc-4469-9bb5-3d87004ecdd0",
       "key": "adGroupContainer",
       "value": "ou=Groups",
       "type": "string"
     },
     {
-      "id": "b06df10f-2244-46c0-b051-adb742c6f1cf",
+      "id": "3f8fe98f-ee6f-4bde-9d35-b6d27c5a9562",
       "key": "oauthSecret",
       "value": "{{globalPwd}}",
       "type": "string"
