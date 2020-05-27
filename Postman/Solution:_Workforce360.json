@@ -6260,7 +6260,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n      \"clientId\": \"PingLogon\",\n      \"enabled\": true,\n      \"redirectUris\": [\n        \"https://change.me\"\n      ],\n      \"grantTypes\": [\n        \"IMPLICIT\",\n        \"AUTHORIZATION_CODE\"\n      ],\n      \"name\": \"Ping Logon\",\n      \"description\": \"This client is used to perform OIDC logons\",\n      \"logoUrl\": \"\",\n      \"refreshRolling\": \"SERVER_DEFAULT\",\n      \"persistentGrantExpirationType\": \"SERVER_DEFAULT\",\n      \"persistentGrantExpirationTime\": 0,\n      \"persistentGrantExpirationTimeUnit\": \"DAYS\",\n      \"persistentGrantIdleTimeoutType\": \"SERVER_DEFAULT\",\n      \"persistentGrantIdleTimeout\": 0,\n      \"persistentGrantIdleTimeoutTimeUnit\": \"DAYS\",\n      \"bypassApprovalPage\": true,\n      \"restrictScopes\": false,\n      \"restrictedScopes\": [],\n      \"exclusiveScopes\": [\n      ],\n      \"restrictedResponseTypes\": [],\n      \"defaultAccessTokenManagerRef\": {\n        \"id\": \"jwtDefault\"\n      },\n      \"validateUsingAllEligibleAtms\": false,\n      \"oidcPolicy\": {\n        \"policyGroup\": {\n          \"id\": \"OIDCPolicyDefault\"\n        },\n        \"grantAccessSessionRevocationApi\": false,\n        \"pingAccessLogoutCapable\": false,\n        \"pairwiseIdentifierUserType\": false\n      },\n      \"clientAuth\": {\n        \"type\": \"SECRET\",\n        \"secret\": \"{{oauthSecret}}\",\n        \"enforceReplayPrevention\": false\n      },\n      \"extendedParameters\": {\n    \t\"authNexp\": {\n        \t\"values\": [\n        \t\t\"Basic\"\n          ]\n        }\n      },\n      \"deviceFlowSettingType\": \"SERVER_DEFAULT\",\n      \"requireProofKeyForCodeExchange\": false,\n      \"requireSignedRequests\": false\n    }",
+                  "raw": "{\n      \"clientId\": \"PingLogon\",\n      \"enabled\": true,\n      \"redirectUris\": [\n        \"https://httpbin.org/anything\"\n      ],\n      \"grantTypes\": [\n        \"IMPLICIT\",\n        \"AUTHORIZATION_CODE\"\n      ],\n      \"name\": \"Ping Logon\",\n      \"description\": \"This client is used to perform OIDC logons\",\n      \"logoUrl\": \"\",\n      \"refreshRolling\": \"SERVER_DEFAULT\",\n      \"persistentGrantExpirationType\": \"SERVER_DEFAULT\",\n      \"persistentGrantExpirationTime\": 0,\n      \"persistentGrantExpirationTimeUnit\": \"DAYS\",\n      \"persistentGrantIdleTimeoutType\": \"SERVER_DEFAULT\",\n      \"persistentGrantIdleTimeout\": 0,\n      \"persistentGrantIdleTimeoutTimeUnit\": \"DAYS\",\n      \"bypassApprovalPage\": true,\n      \"restrictScopes\": false,\n      \"restrictedScopes\": [],\n      \"exclusiveScopes\": [\n      ],\n      \"restrictedResponseTypes\": [],\n      \"defaultAccessTokenManagerRef\": {\n        \"id\": \"jwtDefault\"\n      },\n      \"validateUsingAllEligibleAtms\": false,\n      \"oidcPolicy\": {\n        \"policyGroup\": {\n          \"id\": \"OIDCPolicyDefault\"\n        },\n        \"grantAccessSessionRevocationApi\": false,\n        \"pingAccessLogoutCapable\": false,\n        \"pairwiseIdentifierUserType\": false\n      },\n      \"clientAuth\": {\n        \"type\": \"SECRET\",\n        \"secret\": \"{{oauthSecret}}\",\n        \"enforceReplayPrevention\": false\n      },\n      \"extendedParameters\": {\n    \t\"authNexp\": {\n        \t\"values\": [\n        \t\t\"Basic\"\n          ]\n        }\n      },\n      \"deviceFlowSettingType\": \"SERVER_DEFAULT\",\n      \"requireProofKeyForCodeExchange\": false,\n      \"requireSignedRequests\": false\n    }",
                   "options": {
                     "raw": {}
                   }
@@ -8536,91 +8536,91 @@
   ],
   "variable": [
     {
-      "id": "5d500c40-f954-4485-9a00-e0c37f9ec67c",
+      "id": "06dc3751-d8ab-4407-a22e-c08ab4bbd287",
       "key": "pfAdminURL",
       "value": "https://pingfederate:9999",
       "type": "string"
     },
     {
-      "id": "eac1b06a-8b7b-4fac-80f1-f3b94f6119be",
+      "id": "4841a053-6994-43fc-8e90-d98c8819942e",
       "key": "pdAdminUrl",
       "value": "https://pingdirectory:443",
       "type": "string"
     },
     {
-      "id": "6f57c1ed-0b2c-408d-8834-dcc6c438da5e",
+      "id": "545a4ba5-a7c4-4b67-a89f-950eeb45658b",
       "key": "pdsAdminURL",
       "value": "https://pingdatasync:443",
       "type": "string"
     },
     {
-      "id": "3a1503e4-2396-428c-be35-5650f0d67c5e",
+      "id": "33dba81a-bfed-4d8d-bf9f-fc3ea56a5e51",
       "key": "pfAdmin",
       "value": "api-admin",
       "type": "string"
     },
     {
-      "id": "b09ca018-f68b-4862-b29a-ac42da85ed3f",
+      "id": "5c334cbb-0485-4996-9745-df8e498bf881",
       "key": "pfAdminPwd",
       "value": "{{globalPwd}}",
       "type": "string"
     },
     {
-      "id": "241b0483-d5a9-4ea1-a847-5ee0e356823b",
+      "id": "3f2ecd1e-4fdf-4f9b-9299-cc543cb6aaf4",
       "key": "pdAdmin",
       "value": "cn=administrator",
       "type": "string"
     },
     {
-      "id": "30279c24-189c-4ae6-8250-2a19a5fd0b77",
+      "id": "359ad844-9165-4264-9516-9c1dfdcad00b",
       "key": "pdAdminPwd",
       "value": "{{globalPwd}}",
       "type": "string"
     },
     {
-      "id": "97fac92d-90ba-4f42-94b8-5eb8799f3aac",
+      "id": "8b439e1f-0c22-453b-b2fa-ac5320c26202",
       "key": "pdsAdmin",
       "value": "cn=administrator",
       "type": "string"
     },
     {
-      "id": "20c62166-f62a-4d59-8e41-876e2c756ead",
+      "id": "4622368f-2a51-4ed3-8545-dd02ca7bd243",
       "key": "pdsAdminPwd",
       "value": "{{globalPwd}}",
       "type": "string"
     },
     {
-      "id": "d8d5ec3c-ecfd-452c-b152-100f7412c965",
+      "id": "f9cda13b-9af6-4128-9954-754ef54ccbce",
       "key": "globalPwd",
       "value": "2FederateM0re",
       "type": "string"
     },
     {
-      "id": "51af5648-f05f-43d1-9536-3955f62ae354",
+      "id": "7a425740-2be4-40d1-8ee3-e4a86f5ac073",
       "key": "adServiceAccount",
       "value": "pingfederate",
       "type": "string"
     },
     {
-      "id": "5836c545-52f9-4004-b288-d537bb0b2e87",
+      "id": "7252c3ab-1c8b-4491-8650-8a001492385d",
       "key": "adServicePwd",
       "value": "P@ssword99",
       "type": "string"
     },
     {
-      "id": "4457ba87-a27b-4b4d-ba85-44fb1ae3ff9d",
+      "id": "b7a6bef3-7049-43e7-a59f-fbbec65783c5",
       "key": "adUserContainer",
       "value": "cn=Users",
       "type": "string"
     },
     {
-      "id": "cb8a8f48-6b4a-4993-9c02-050cbd549bb1",
+      "id": "42450d24-4d29-4dc6-a74c-db12be592672",
       "key": "adGroupContainer",
       "value": "ou=Groups",
       "type": "string"
     },
     {
-      "id": "bf584f74-fee3-4740-9c78-4f0472555fe5",
+      "id": "72c5ca45-d37c-465b-af22-367118eb33af",
       "key": "oauthSecret",
       "value": "{{globalPwd}}",
       "type": "string"
