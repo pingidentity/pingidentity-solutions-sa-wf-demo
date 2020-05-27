@@ -10,8 +10,8 @@ The first collection is to create the AD Forest, Add AD Domain Services (i.e. a 
 Passwords for Users are `2FederateM0re`
 
 **Note:** these users are created with the commands in:  
-* [11-Create-PingServiceUser.ps](docs/ActiveDirectory/00-Install-and-Configure-Domain-Controller/11-Create-PingServiceUser.ps)
-* [15-Create-PingUsers.ps](docs/ActiveDirectory/00-Install-and-Configure-Domain-Controller/15-Create-PingUsers.ps)
+* [11-Create-PingServiceUser.ps](./ActiveDirectory/00-Install-and-Configure-Domain-Controller/11-Create-PingServiceUser.ps)
+* [15-Create-PingUsers.ps](./ActiveDirectory/00-Install-and-Configure-Domain-Controller/15-Create-PingUsers.ps)
   
 The Certificate Authority is used by the Domain Controller to get certificates used by LDAPS, and future use cases for Win10 Devices or User Certs (i.e. Smart Cards)
 
@@ -38,7 +38,7 @@ An implementation of ActiveDirectory with these commands has been performed in P
 A SPN has been added to the `pingfederate` account to allow Kerberos from `workforce-pf.ping-demos.com`
 
 This is configured in:
-* [11-Create-PingServiceUser.ps](docs/ActiveDirectory/00-Install-and-Configure-Domain-Controller/11-Create-PingServiceUser.ps)
+* [11-Create-PingServiceUser.ps](./ActiveDirectory/00-Install-and-Configure-Domain-Controller/11-Create-PingServiceUser.ps)
 
 **LDAPS Certificate for PingFed**  
 In order for PingFed to be able to connect over LDAPS, you will need to export the certificate.  
@@ -50,4 +50,4 @@ The certificate should show the CN as the Domain Controller **windows** name
 Export this as a `.DER` format and you can import into PingFed.  
 
 If you are connecting to this ActiveDirectory instance, the cert has already been exported and stored here:  
-* [AD LDAPS Cert](docs/ActiveDirectory/solution-wf-ad-cert.crt)
+* [AD LDAPS Cert](./ActiveDirectory/solution-wf-ad-cert.crt)
