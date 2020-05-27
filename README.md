@@ -13,7 +13,7 @@ The Ping [**Workforce360**](https://www.pingidentity.com/en/solutions/workforce-
 * Deployment
   * [Pre-Requisites](docs/deployment-prerequisites.md)
   * [Environment Variables](docs/deployment-variables.md)
-  * [Deployment - Docker Compose](deployment/Compose)
+  * [Deployment - Docker Compose](docs/deployment/Compose)
 * Post Deployment
   * [Active Directory \ Kerberos](docs/ostdeployment-ad.md) 
   * [PingOne for Enterprise](docs/postdeployment-p14e.md)
