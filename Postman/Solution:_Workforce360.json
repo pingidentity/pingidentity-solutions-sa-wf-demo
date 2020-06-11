@@ -3058,7 +3058,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"contactInfo\": {\n    \"company\": \"PF Demo\"\n  },\n  \"rolesAndProtocols\": {\n    \"oauthRole\": {\n      \"enableOauth\": {{oauthEnabled}},\n      \"enableOpenIdConnect\": {{oauthEnabled}}\n    },\n    \"idpRole\": {\n      \"enable\": true,\n      \"saml20Profile\": {\n        \"enable\": true,\n        \"enableAutoConnect\": false\n      },\n      \"enableOutboundProvisioning\": {{provisioningEnabled}},\n      \"enableSaml11\": false,\n      \"enableSaml10\": false,\n      \"enableWsFed\": true,\n      \"enableWsTrust\": {{wsTrustEnabled}}\n    },\n    \"spRole\": {\n      \"enable\": true,\n      \"saml20Profile\": {\n        \"enable\": true,\n        \"enableXASP\": false,\n        \"enableAutoConnect\": false\n      },\n      \"enableSaml11\": false,\n      \"enableSaml10\": false,\n      \"enableWsFed\": false,\n      \"enableWsTrust\": false,\n      \"enableOpenIDConnect\": true,\n      \"enableInboundProvisioning\": false\n    },\n    \"enableIdpDiscovery\": false\n  },\n  \"federationInfo\": {\n    \"baseUrl\": \"{{pfBaseURL}}\",\n    \"saml2EntityId\": \"{{pfBaseURL}}\",\n    \"autoConnectEntityId\": \"{{pfBaseURL}}\",\n    \"saml1xIssuerId\": \"{{pfBaseURL}}\",\n    \"saml1xSourceId\": \"{{pfBaseURL}}\",\n    \"wsfedRealm\": \"{{pfBaseURL}}\"\n  }\n}",
+                  "raw": "{\n  \"contactInfo\": {\n    \"company\": \"PF Demo\"\n  },\n  \"rolesAndProtocols\": {\n    \"oauthRole\": {\n      \"enableOauth\": {{oauthEnabled}},\n      \"enableOpenIdConnect\": {{oauthEnabled}}\n    },\n    \"idpRole\": {\n      \"enable\": true,\n      \"saml20Profile\": {\n        \"enable\": true,\n        \"enableAutoConnect\": false\n      },\n      \"enableOutboundProvisioning\": {{provisioningEnabled}},\n      \"enableSaml11\": false,\n      \"enableSaml10\": false,\n      \"enableWsFed\": true,\n      \"enableWsTrust\": {{wsTrustEnabled}}\n    },\n    \"spRole\": {\n      \"enable\": true,\n      \"saml20Profile\": {\n        \"enable\": true,\n        \"enableXASP\": false,\n        \"enableAutoConnect\": false\n      },\n      \"enableSaml11\": false,\n      \"enableSaml10\": false,\n      \"enableWsFed\": false,\n      \"enableWsTrust\": false,\n      \"enableOpenIDConnect\": true,\n      \"enableInboundProvisioning\": false\n    },\n    \"enableIdpDiscovery\": false\n  },\n  \"federationInfo\": {\n    \"baseUrl\": \"{{pfBaseURL}}\",\n    \"saml2EntityId\": \"{{pfBaseURL}}\",\n    \"autoConnectEntityId\": \"{{pfBaseURL}}\",\n    \"saml1xIssuerId\": \"{{pfBaseURL}}\",\n    \"wsfedRealm\": \"{{pfBaseURL}}\"\n  }\n}",
                   "options": {
                     "raw": {}
                   }
@@ -8536,91 +8536,91 @@
   ],
   "variable": [
     {
-      "id": "06dc3751-d8ab-4407-a22e-c08ab4bbd287",
+      "id": "f30571a6-69b1-4cf1-b6b2-5aacae7c6cd0",
       "key": "pfAdminURL",
       "value": "https://pingfederate:9999",
       "type": "string"
     },
     {
-      "id": "4841a053-6994-43fc-8e90-d98c8819942e",
+      "id": "1b6de842-ab9e-4cbc-a936-3ae469632af8",
       "key": "pdAdminUrl",
       "value": "https://pingdirectory:443",
       "type": "string"
     },
     {
-      "id": "545a4ba5-a7c4-4b67-a89f-950eeb45658b",
+      "id": "9e040e47-e5d3-4c33-8d40-851b9fb221b7",
       "key": "pdsAdminURL",
       "value": "https://pingdatasync:443",
       "type": "string"
     },
     {
-      "id": "33dba81a-bfed-4d8d-bf9f-fc3ea56a5e51",
+      "id": "58e4ece1-e4af-43a2-b63c-98b3e2d72ac0",
       "key": "pfAdmin",
       "value": "api-admin",
       "type": "string"
     },
     {
-      "id": "5c334cbb-0485-4996-9745-df8e498bf881",
+      "id": "fba565c8-4e8c-441f-9c97-c933851af376",
       "key": "pfAdminPwd",
       "value": "{{globalPwd}}",
       "type": "string"
     },
     {
-      "id": "3f2ecd1e-4fdf-4f9b-9299-cc543cb6aaf4",
+      "id": "2af2e22d-3219-4304-85d7-41367e652193",
       "key": "pdAdmin",
       "value": "cn=administrator",
       "type": "string"
     },
     {
-      "id": "359ad844-9165-4264-9516-9c1dfdcad00b",
+      "id": "ef181082-14d4-4abf-85ce-97cfddda7a86",
       "key": "pdAdminPwd",
       "value": "{{globalPwd}}",
       "type": "string"
     },
     {
-      "id": "8b439e1f-0c22-453b-b2fa-ac5320c26202",
+      "id": "24636c41-99be-46b7-9d06-f88d59606ca1",
       "key": "pdsAdmin",
       "value": "cn=administrator",
       "type": "string"
     },
     {
-      "id": "4622368f-2a51-4ed3-8545-dd02ca7bd243",
+      "id": "c3525ecc-ed18-43fd-9cdf-bdd6dfd25988",
       "key": "pdsAdminPwd",
       "value": "{{globalPwd}}",
       "type": "string"
     },
     {
-      "id": "f9cda13b-9af6-4128-9954-754ef54ccbce",
+      "id": "fd5ef402-db8a-4da4-8211-94e148d2ba49",
       "key": "globalPwd",
       "value": "2FederateM0re",
       "type": "string"
     },
     {
-      "id": "7a425740-2be4-40d1-8ee3-e4a86f5ac073",
+      "id": "16b42d81-6ba4-4985-8c1a-29114aef3615",
       "key": "adServiceAccount",
       "value": "pingfederate",
       "type": "string"
     },
     {
-      "id": "7252c3ab-1c8b-4491-8650-8a001492385d",
+      "id": "8d666714-9beb-44a0-b991-e48c1526b25c",
       "key": "adServicePwd",
       "value": "P@ssword99",
       "type": "string"
     },
     {
-      "id": "b7a6bef3-7049-43e7-a59f-fbbec65783c5",
+      "id": "18a8e15b-4b64-4db6-be82-0acb1bbac925",
       "key": "adUserContainer",
       "value": "cn=Users",
       "type": "string"
     },
     {
-      "id": "42450d24-4d29-4dc6-a74c-db12be592672",
+      "id": "1367ae0d-4906-4ef5-8748-217f5e4f4f7b",
       "key": "adGroupContainer",
       "value": "ou=Groups",
       "type": "string"
     },
     {
-      "id": "72c5ca45-d37c-465b-af22-367118eb33af",
+      "id": "35212aa2-66ca-4534-bcd6-49770450c601",
       "key": "oauthSecret",
       "value": "{{globalPwd}}",
       "type": "string"
