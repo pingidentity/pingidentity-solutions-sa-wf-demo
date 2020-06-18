@@ -9,7 +9,7 @@
 Variables have been exposed to allow the deployment to be customized to your specific environment.  
 
 The necessary variables are configured in 2 locations, depending on where they are applied:
-* API Configuration: [Postman Variables](../../docs/deployment-variables.md)
+* API Configuration: [Postman Variables](/docs/deployment-variables.md)
 * Docker Images: [Image Variables](./environment-vars.md)
 
 ### Deployment - Docker Compose
