@@ -2,7 +2,7 @@
 
 ---
 The Ping [**Workforce360**](https://www.pingidentity.com/en/solutions/workforce-identity/workforce360.html) Solution provides an Enterprise package that includes:
-* Global Authentcation Authority (PingFederate) 
+* Global Authentication Authority (PingFederate) 
 * Strong Multi-Factor Authentication (PingID) 
 * IDaaS Application Management (PingOne for Enterprise)
 * Unified Data Store (PingDirectory & PingDataSync) 
@@ -13,13 +13,13 @@ The Ping [**Workforce360**](https://www.pingidentity.com/en/solutions/workforce-
 * Deployment
   * [Pre-Requisites](docs/deployment-prerequisites.md)
   * [Environment Variables](docs/deployment-variables.md)
-  * [Deployment - Docker Compose](docs/deployment/Compose)
+  * [Deployment - Docker Compose](docs/deployment/Compose/README.md)
 * Post Deployment
   * [Active Directory \ Kerberos](docs/postdeployment-ad.md) 
   * [PingOne for Enterprise](docs/postdeployment-p14e.md)
   * [Secure LDAP to PingDirectory](docs/postdeployment-pdldaps.md)
 * Configuration
-  * [Admin Consoles](config-consoles.md)
+  * [Admin Consoles](docs/config-consoles.md)
   * [Authentication Authority (PingFederate)](docs/config-pingfed.md)
   * [Application Onboarding (PingCentral)](docs/config-pingcentral.md)
 * Use Cases

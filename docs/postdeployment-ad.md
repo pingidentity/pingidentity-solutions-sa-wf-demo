@@ -11,4 +11,4 @@ The Configuration API Collection is configured to allow you to use an existing A
 If your AD is not yet configured to allow PingFederate to use Kerberos, follow the steps outlined here:
 * [Configuring your AD Environment](https://docs.pingidentity.com/bundle/pingfederate-100/page/zoj1564002979045.html)
 
-If you would like to **build** your own, you can use the Commands listed in the [ActiveDirectory](../ActiveDirectory) section of this repo.
+If you would like to **build** your own, you can use the Commands listed in the [ActiveDirectory](/docs/ActiveDirectory) section of this repo.
