@@ -1,0 +1,28 @@
+# Acceptance of the Ping EULA
+PING_IDENTITY_ACCEPT_EULA=YES
+
+# PF Logging Level
+PF_LOG_LEVEL=DEBUG
+
+# Password Used to bind to PingDirectory in ldap.properties
+PF_USER_PWD=2FederateM0re
+
+# PD Variables
+USER_BASE_DN=dc=workforce360.com
+
+# AD Variables
+# Used in the PF AD Datastore \ PCV && PingDataSync
+AD_DC_HOST=int-ad.solution-wf.ping-eng.com
+AD_BASE_DN=dc=workforce360,dc=com
+
+# PingCentral Variables
+# These values are placed into the `application.properties` file
+PING_CENTRAL_BLIND_TRUST=true
+PING_CENTRAL_VERIFY_HOSTNAME=false
+MYSQL_USER=root
+MYSQL_PASSWORD=2Federate
+MYSQL_ROOT_PASSWORD=2Federate
+PING_CENTRAL_OIDC_ENABLED=true
+PING_CENTRAL_CLIENT_ID=PingCentral
+PING_CENTRAL_CLIENT_SECRET=2FederateM0re
+PF_ISSUER=https://docker.workforce360.com:9031
