@@ -33,7 +33,7 @@ services:
     ports:
       - 1636:636
       - 1443:443
-  
+
   pingdataconsole:
     image: pingidentity/pingdataconsole:latest
     ports:
@@ -72,8 +72,9 @@ services:
     image: pingidentity/pingcentral:latest
     command: wait-for pingfederate:9031 -t 7200 -- entrypoint.sh start-server
     environment:
-      - SERVER_PROFILE_URL=https://github.com/pingidentity/Workforce360.git
+      - SERVER_PROFILE_URL=https://github.com/cprice-ping/Customer360
       - SERVER_PROFILE_PATH=pingcentral/external-mysql-db
+      - SERVER_PROFILE_BRANCH=v2.0
     env_file:
       - ./env_vars
     secrets:
@@ -81,7 +82,7 @@ services:
     ports:
       - "9022:9022"
     depends_on:
-      - "pingcentral-db"
+      - "pingcentral-db"     
 
   pingcentral-db:
     image: mysql
@@ -93,4 +94,4 @@ services:
 
 secrets:
   devops-secret:
-    file: ${HOME}/.pingidentity/devops
+    file: ${HOME}/.pingidentity/devops 
