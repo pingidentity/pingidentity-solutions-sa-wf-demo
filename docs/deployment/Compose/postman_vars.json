@@ -9,7 +9,7 @@
 		},
 		{
 			"key": "pingId",
-			"value": "#Auto-Generated from PingOne, downloaded by id=[000000] email=[admin0@workforce360.com]\n#Thu May 07 17:31:22 MDT 2020\nuse_base64_key=YourBase64Key=\nuse_signature=true\ntoken=YourToken\nidp_url=https://idpxnyl3m.pingidentity.com/pingid\norg_alias=YourOrgAlias\nadmin_url=https://idpxnyl3m.pingidentity.com/pingid\nauthenticator_url=https://authenticator.pingone.com/pingid/ppm",
+			"value": "#Auto-Generated from PingOne, downloaded by id=[1200602] email=[stewartcowie+lbgpoc@pingidentity.com]\n#Thu May 07 17:31:22 MDT 2020\nuse_base64_key=RkZEEqxJbqIvMMBi6nE0Jpk0RqvLq/ILqjP5k4edoGY=\nuse_signature=true\ntoken=bfa331a5926a4db7afcebb370757f799\nidp_url=https://idpxnyl3m.pingidentity.eu/pingid\norg_alias=15bb0af3-2c6b-465d-a1a4-5c69ef5cb088\nadmin_url=https://idpxnyl3m.pingidentity.eu/pingid/pingid\nauthenticator_url=https://authenticator.pingone.eu/pingid/ppm",
 			"enabled": true
 		},
 		{
