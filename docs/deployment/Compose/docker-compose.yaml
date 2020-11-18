@@ -9,7 +9,7 @@ services:
     secrets:
       - devops-secret
     environment:
-      - SERVER_PROFILE_URL=https://github.com/pingidentity/Workforce360.git
+      - SERVER_PROFILE_URL=https://github.com/pingidentity/pingidentity-solutions-sa-wf-demo.git
       - SERVER_PROFILE_PATH=pingfederate
         #    volumes:       
         #- ./pingfederate:/opt/out/instance
@@ -24,7 +24,7 @@ services:
     secrets:
       - devops-secret
     environment:
-      - SERVER_PROFILE_URL=https://github.com/pingidentity/Workforce360.git
+      - SERVER_PROFILE_URL=https://github.com/pingidentity/pingidentity-solutions-sa-wf-demo.git
       - SERVER_PROFILE_PATH=pingdirectory
     # Uncomment the `volume:` section below to persist PingFederate data if you restart the container
     # NOTE: Comment out the `environment:` section above - they do not co-exist
@@ -51,7 +51,7 @@ services:
   pingdatasync:
     image: pingidentity/pingdatasync:latest
     environment:
-      - SERVER_PROFILE_URL=https://github.com/pingidentity/Workforce360.git
+      - SERVER_PROFILE_URL=https://github.com/pingidentity/pingidentity-solutions-sa-wf-demo.git
       - SERVER_PROFILE_PATH=pingdatasync
     env_file:
       - ./env_vars
@@ -72,7 +72,7 @@ services:
     image: pingidentity/pingcentral:latest
     command: wait-for pingfederate:9031 -t 7200 -- entrypoint.sh start-server
     environment:
-      - SERVER_PROFILE_URL=https://github.com/pingidentity/Workforce360.git
+      - SERVER_PROFILE_URL=https://github.com/pingidentity/pingidentity-solutions-sa-wf-demo.git
       - SERVER_PROFILE_PATH=pingcentral/external-mysql-db
     env_file:
       - ./env_vars
